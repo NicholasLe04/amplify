@@ -15,41 +15,41 @@ import org.springframework.web.util.UriComponentsBuilder;
 @RequestMapping("/api/v1/auth")
 public class AuthController {
     @Value("${CLIENT_ID}")
-	private String clientId;
-	@Value("${CLIENT_SECRET}")
-	private String clientSecret;
+    private String clientId;
+    @Value("${CLIENT_SECRET}")
+    private String clientSecret;
 
-	@GetMapping("/login")
-	public RedirectView login() {
-		String authUrl = UriComponentsBuilder.fromHttpUrl("https://accounts.spotify.com/authorize")
-			.queryParam("response_type", "code")
-            .queryParam("client_id", clientId)
-            .queryParam("scope", "user-read-private user-read-email")
-            .queryParam("redirect_uri", "http://localhost:8080/api/v1/auth/callback")
-            .build()
-            .toString();
+    @GetMapping("/login")
+    public RedirectView login() {
+        String authUrl = UriComponentsBuilder.fromHttpUrl("https://accounts.spotify.com/authorize")
+                .queryParam("response_type", "code")
+                .queryParam("client_id", clientId)
+                .queryParam("scope", "user-read-private user-read-email")
+                .queryParam("redirect_uri", "/api/v1/auth/callback")
+                .build()
+                .toString();
 
-		return new RedirectView(authUrl);
-	}
+        return new RedirectView(authUrl);
+    }
 
-	@GetMapping("/callback")
-	public String getUserCode(@RequestParam String code) {
-		HttpHeaders headers = new HttpHeaders();
-		headers.add("content-type", "application/x-www-form-urlencoded");
+    @GetMapping("/callback")
+    public String getUserCode(@RequestParam String code) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("content-type", "application/x-www-form-urlencoded");
 
-		String authUrl = UriComponentsBuilder.fromHttpUrl("https://accounts.spotify.com/api/token")
-			.queryParam("code", code)
-            .queryParam("redirect_uri", "http://localhost:8080/api/v1/auth/callback")
-            .queryParam("grant_type", "authorization_code")
-			.queryParam("client_id", clientId)
-			.queryParam("client_secret", clientSecret)
-            .build()
-            .toString();
-		
-		ResponseEntity<String> response = new RestTemplate().postForEntity(authUrl, null, String.class, headers);
+        String authUrl = UriComponentsBuilder.fromHttpUrl("https://accounts.spotify.com/api/token")
+                .queryParam("code", code)
+                .queryParam("redirect_uri", "/api/v1/auth/callback")
+                .queryParam("grant_type", "authorization_code")
+                .queryParam("client_id", clientId)
+                .queryParam("client_secret", clientSecret)
+                .build()
+                .toString();
 
-		return response.getBody();
-	}
+        ResponseEntity<String> response = new RestTemplate().postForEntity(authUrl, null, String.class, headers);
+
+        return response.getBody();
+    }
 
     @GetMapping("/refresh")
     public String refreshToken(@RequestParam String token) {
@@ -57,12 +57,12 @@ public class AuthController {
         headers.add("content-type", "application/x-www-form-urlencoded");
 
         String authUrl = UriComponentsBuilder.fromHttpUrl("https://accounts.spotify.com/api/token")
-            .queryParam("grant_type", "refresh_token")
-            .queryParam("refresh_token", token)
-			.queryParam("client_id", clientId)
-			.queryParam("client_secret", clientSecret)
-            .build()
-            .toString();
+                .queryParam("grant_type", "refresh_token")
+                .queryParam("refresh_token", token)
+                .queryParam("client_id", clientId)
+                .queryParam("client_secret", clientSecret)
+                .build()
+                .toString();
 
         ResponseEntity<String> response = new RestTemplate().postForEntity(authUrl, null, String.class, headers);
 
