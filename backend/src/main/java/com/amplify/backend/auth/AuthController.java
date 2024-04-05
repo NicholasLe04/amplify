@@ -31,7 +31,6 @@ import jakarta.servlet.http.HttpSession;
 public class AuthController {
 
     @Value("${CLIENT_ID}")
-<<<<<<< HEAD
 	private String clientId;
 
 	@Value("${CLIENT_SECRET}")
@@ -160,43 +159,6 @@ public class AuthController {
             .toString();
 
 		ResponseEntity<String> response = new RestTemplate().postForEntity(authUrl, null, String.class, authUrlHeaders);
-=======
-    private String clientId;
-    @Value("${CLIENT_SECRET}")
-    private String clientSecret;
-
-    @GetMapping("/login")
-    public RedirectView login() {
-        String authUrl = UriComponentsBuilder.fromHttpUrl("https://accounts.spotify.com/authorize")
-                .queryParam("response_type", "code")
-                .queryParam("client_id", clientId)
-                .queryParam("scope", "user-read-private user-read-email")
-                .queryParam("redirect_uri", "/api/v1/auth/callback")
-                .build()
-                .toString();
-
-        return new RedirectView(authUrl);
-    }
-
-    @GetMapping("/callback")
-    public String getUserCode(@RequestParam String code) {
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("content-type", "application/x-www-form-urlencoded");
-
-        String authUrl = UriComponentsBuilder.fromHttpUrl("https://accounts.spotify.com/api/token")
-                .queryParam("code", code)
-                .queryParam("redirect_uri", "/api/v1/auth/callback")
-                .queryParam("grant_type", "authorization_code")
-                .queryParam("client_id", clientId)
-                .queryParam("client_secret", clientSecret)
-                .build()
-                .toString();
-
-        ResponseEntity<String> response = new RestTemplate().postForEntity(authUrl, null, String.class, headers);
-
-        return response.getBody();
-    }
->>>>>>> main
 
         return objectMapper.readTree(response.getBody());
     }
@@ -206,19 +168,9 @@ public class AuthController {
         HttpHeaders headers = new HttpHeaders();
         headers.add("Authorization", "Bearer " + accessToken);
 
-<<<<<<< HEAD
         String profileUrl = UriComponentsBuilder.fromHttpUrl("https://api.spotify.com/v1/me")
             .build()
             .toString();
-=======
-        String authUrl = UriComponentsBuilder.fromHttpUrl("https://accounts.spotify.com/api/token")
-                .queryParam("grant_type", "refresh_token")
-                .queryParam("refresh_token", token)
-                .queryParam("client_id", clientId)
-                .queryParam("client_secret", clientSecret)
-                .build()
-                .toString();
->>>>>>> main
 
         HttpEntity<String> requestEntity = new HttpEntity<>(headers);
         ResponseEntity<String> response = new RestTemplate().exchange(
