@@ -1,10 +1,7 @@
 package com.amplify.backend.user;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 
 @Entity
@@ -12,16 +9,6 @@ import jakarta.persistence.Table;
 public class User {
     
     @Id
-    @SequenceGenerator(
-        name = "user_sequence",
-        sequenceName = "user_sequence",
-        allocationSize = 1
-    )
-    @GeneratedValue(
-        strategy = GenerationType.SEQUENCE,
-        generator = "user_sequence"
-    )
-    private Long id;
     private String email;
     private String display_name;
     private String external_url;
@@ -29,10 +16,20 @@ public class User {
     private String country;
     private String access_token;
     private String refresh_token;
+    private String session_id;
 
     protected User() {};
 
-    public Long getId() { return id; }
+    public User(String email, String display_name, String external_url, String img_url, String country, String access_token, String refresh_token, String session_id) {
+        this.email = email;
+        this.display_name = display_name;
+        this.external_url = external_url;
+        this.img_url = img_url;
+        this.country = country;
+        this.access_token = access_token;
+        this.refresh_token = refresh_token;
+        this.session_id = session_id;
+    }
 
     public String getEmail() { return email; }
 
@@ -48,7 +45,7 @@ public class User {
 
     public String getRefreshToken() { return refresh_token; }
 
-    public void setId(Long id) { this.id = id; }
+    public String getSessionId() { return session_id; }
 
     public void setEmail(String email) { this.email = email; }
 
@@ -64,6 +61,8 @@ public class User {
 
     public void setRefreshToken(String refresh_token) { this.refresh_token = refresh_token; }
 
+    public void setSessionId(String session_id) { this.session_id = session_id; }
+
     @Override
     public String toString() {
         return "User [email=" + email + 
@@ -72,6 +71,7 @@ public class User {
             ", img_url=" + img_url + 
             ", country=" + country + 
             ", access_token=" + access_token +
-            ", refresh_token=" + refresh_token + "]";
+            ", refresh_token=" + refresh_token +
+            ", session_id=" + session_id + "]";
     }
 }
