@@ -1,13 +1,14 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react';
+import endpoint from '../endpoints.config';
 
 async function login() {
   const code = (new URLSearchParams(window.location.search)).get('code');
   if (code === null) {
-    window.location.href = process.env.REACT_APP_FRONTEND_URL;
+    window.location.href = endpoint.FrontendUrl || '';
     return null;
   }
   else {
-    return await fetch(process.env.REACT_APP_BACKEND_URL + "/api/v1/auth/callback?code=" + code, {
+    return await fetch(endpoint.BackendUrl + "/api/v1/auth/callback?code=" + code, {
       method: 'GET',
       credentials: 'include'
     });
@@ -19,14 +20,14 @@ function Callback() {
   const useEffectCallbackFunction = async () => {
     const response = await login();
     if (response == null || response.status === 200) { 
-      window.location.href = process.env.REACT_APP_FRONTEND_URL + "/home";
+      window.location.href = endpoint.FrontendUrl + "/home";
     }
     else {
-      window.location.href = process.env.REACT_APP_FRONTEND_URL;
+      window.location.href = endpoint.FrontendUrl || '';
     }
   }
 
-  useEffect(() => useEffectCallbackFunction, []);
+  useEffect(() => {console.log(endpoint.FrontendUrl);useEffectCallbackFunction()}, []);
 
   return (
     <div>Callback</div>
