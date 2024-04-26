@@ -1,8 +1,8 @@
-export default function MobileHome() {
+export default function WebProfile() {
     return (
         <>
             <div className='w-full h-full'>
-                <h1>MobileHome</h1>
+                <h1>WebProfile</h1>
             </div>
         </>
     )

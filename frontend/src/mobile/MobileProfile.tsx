@@ -1,8 +1,8 @@
-export default function MobileHome() {
+export default function MobileProfile() {
     return (
         <>
             <div className='w-full h-full'>
-                <h1>MobileHome</h1>
+                <h1>MobileProfile</h1>
             </div>
         </>
     )

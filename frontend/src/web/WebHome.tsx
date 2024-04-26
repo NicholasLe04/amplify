@@ -1,7 +1,9 @@
 export default function WebHome() {
     return (
-        <div>
-            <h1>WebHome</h1>
-        </div>
+        <>
+            <div className='flex-1'>
+                <h1>WebHome</h1>
+            </div>
+        </>
     )
 }

@@ -2,7 +2,12 @@
 export default {
     content: ['./src/**/*.{js,ts,jsx,tsx,html}'],
     theme: {
-        extend: {},
+        extend: {
+            colors: {
+                'space': '#242b3d',
+                'space-light': '#2e3a53',
+            },
+        },
     },
     plugins: [],
 }

@@ -1,15 +1,30 @@
-import { QueryClient } from '@tanstack/react-query'
+import { QueryClient, useQuery } from '@tanstack/react-query'
 import lodash from 'lodash'
-import { useEffect, useState } from 'react'
-import { Route } from 'react-router-dom'
+import { createContext, useEffect, useState } from 'react'
+import { Route, Routes } from 'react-router-dom'
 import Wrapper from './common/Wrapper'
-import WebHome from './web/WebHome'
 import MobileHome from './mobile/MobileHome'
+import WebHome from './web/WebHome'
+import WebProfile from './web/WebProfile'
+import MobileProfile from './mobile/MobileProfile'
+import WebSidebar from './web/WebSidebar'
+import WebHeader from './web/WebHeader'
+import MobileHeader from './mobile/MobileHeader'
+import MobileFooter from './mobile/MobileFooter'
+import axios from 'axios'
 
-function App() {
+export default function App() {
 
     const queryClient = new QueryClient()
+    const ProfileContext = createContext({ username: '', track: '', artists: [], artwork: '' });
     const [windowWidth, setWindowWidth] = useState(window.innerWidth)
+
+    const profile = useQuery({
+        queryKey: ['nowPlaying'],
+        queryFn: async () => {
+            return axios.get('')
+        }
+    })
 
     const debouncedHandleResize = lodash.throttle((size) => {
         setWindowWidth(size)
@@ -33,17 +48,33 @@ function App() {
             {
                 windowWidth < 768 ?
                     // mobile
-                    <Wrapper queryClient={queryClient}>
-                        <Route path="/home" element={<MobileHome />} />
+                    <Wrapper queryClient={queryClient} ProfileContext={ProfileContext}>
+                        <div className='w-full h-full flex flex-col'>
+                            <MobileHeader />
+                            <div className='flex-1'>
+                                <Routes>
+                                    <Route path="/home" element={<MobileHome />} />
+                                    <Route path="/profile" element={<MobileProfile />} />
+                                </Routes>
+                            </div>
+                            <MobileFooter />
+                        </div>
                     </Wrapper>
                     :
                     // web
-                    <Wrapper queryClient={queryClient}>
-                        <Route path="/home" element={<WebHome />} />
+                    <Wrapper queryClient={queryClient} ProfileContext={ProfileContext}>
+                        <div className='h-full w-full flex'>
+                            <WebSidebar />
+                            <div className='flex flex-col flex-1'>
+                                <WebHeader />
+                                <Routes>
+                                    <Route path="/home" element={<WebHome />} />
+                                    <Route path="/profile" element={<WebProfile />} />
+                                </Routes>
+                            </div>
+                        </div>
                     </Wrapper>
             }
         </>
     )
 }
-
-export default App
