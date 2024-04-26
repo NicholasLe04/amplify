@@ -7,6 +7,10 @@ export default {
                 'space': '#242b3d',
                 'space-light': '#2e3a53',
             },
+            fontFamily: {
+                'sans': ['Poppins', 'sans-serif'],
+                'loading': ['Flow Circular']
+            },
         },
     },
     plugins: [],

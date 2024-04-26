@@ -31,10 +31,10 @@ import jakarta.servlet.http.HttpSession;
 public class AuthController {
 
     @Value("${CLIENT_ID}")
-	private String clientId;
+    private String clientId;
 
-	@Value("${CLIENT_SECRET}")
-	private String clientSecret;
+    @Value("${CLIENT_SECRET}")
+    private String clientSecret;
 
     @Value("${FRONTEND_URL}")
     private String frontendUrl;
@@ -47,21 +47,21 @@ public class AuthController {
         this.userService = userService;
     }
 
-	@GetMapping("/authorize")
-	public String authorize() {
-		String authUrl = UriComponentsBuilder.fromHttpUrl("https://accounts.spotify.com/authorize")
-			.queryParam("response_type", "code")
-            .queryParam("client_id", clientId)
-            .queryParam("scope", "user-read-private user-read-email")
-            .queryParam("redirect_uri", frontendUrl + "/callback")
-            .build()
-            .toString();
+    @GetMapping("/authorize")
+    public String authorize() {
+        String authUrl = UriComponentsBuilder.fromHttpUrl("https://accounts.spotify.com/authorize")
+                .queryParam("response_type", "code")
+                .queryParam("client_id", clientId)
+                .queryParam("scope", "user-read-private%20user-read-email")
+                .queryParam("redirect_uri", frontendUrl + "/callback")
+                .build()
+                .toString();
 
-		return authUrl;
-	}
+        return authUrl;
+    }
 
-	@GetMapping("/callback")
-	public String callback(@RequestParam String code, HttpServletRequest request, HttpServletResponse response) {
+    @GetMapping("/callback")
+    public String callback(@RequestParam String code, HttpServletRequest request, HttpServletResponse response) {
 
         // Get and parse user tokens
         String accessToken = "", refreshToken = "";
@@ -72,7 +72,7 @@ public class AuthController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        
+
         // Get and parse user profile data
         String country = "", displayName = "", email = "", externalUrl = "", imgUrl = "";
         try {
@@ -101,29 +101,24 @@ public class AuthController {
         cookie.setMaxAge(31536000);
         cookie.setPath("/");
         response.addCookie(cookie);
-        response.setHeader("Access-Control-Allow-Origin", frontendUrl);
-        response.setHeader("Access-Control-Allow-Credentials", "true");
 
         // Return the user's access and refresh token
-		return "{\"session_id\": \"" + sessionId + "\"}";
-	}
+        return "{\"session_id\": \"" + sessionId + "\"}";
+    }
 
     @GetMapping("/session/validate")
-    public String validateSession(@CookieValue(value="JSESSIONID", required=false) String sessionId, HttpServletRequest request, HttpServletResponse response) {
+    public String validateSession(@CookieValue(value = "JSESSIONID", required = false) String sessionId,
+            HttpServletRequest request, HttpServletResponse response) {
         System.out.println(sessionId);
-        response.setHeader("Access-Control-Allow-Origin", frontendUrl);
-        response.setHeader("Access-Control-Allow-Credentials", "true");
         if (sessionId == null) {
             return "{\"status\":\"invalid\"}";
         }
         try {
             userService.getUserBySessionId(sessionId);
             return "{\"status\":\"valid\"}";
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             return "{\"status\":\"invalid\"}";
         }
-
     }
 
     @GetMapping("/logout")
@@ -138,47 +133,42 @@ public class AuthController {
         cookie.setMaxAge(0);
         cookie.setPath("/");
         response.addCookie(cookie);
-        response.setHeader("Access-Control-Allow-Origin", frontendUrl);
-        response.setHeader("Access-Control-Allow-Credentials", "true");
 
         return "logged out";
     }
 
-
     private JsonNode getUserTokens(String code) throws Exception {
-		HttpHeaders authUrlHeaders = new HttpHeaders();
-		authUrlHeaders.add("content-type", "application/x-www-form-urlencoded");
+        HttpHeaders authUrlHeaders = new HttpHeaders();
+        authUrlHeaders.add("content-type", "application/x-www-form-urlencoded");
 
-		String authUrl = UriComponentsBuilder.fromHttpUrl("https://accounts.spotify.com/api/token")
-			.queryParam("code", code)
-            .queryParam("redirect_uri", frontendUrl + "/callback")
-            .queryParam("grant_type", "authorization_code")
-			.queryParam("client_id", clientId)
-			.queryParam("client_secret", clientSecret)
-            .build()
-            .toString();
+        String authUrl = UriComponentsBuilder.fromHttpUrl("https://accounts.spotify.com/api/token")
+                .queryParam("code", code)
+                .queryParam("redirect_uri", frontendUrl + "/callback")
+                .queryParam("grant_type", "authorization_code")
+                .queryParam("client_id", clientId)
+                .queryParam("client_secret", clientSecret)
+                .build()
+                .toString();
 
-		ResponseEntity<String> response = new RestTemplate().postForEntity(authUrl, null, String.class, authUrlHeaders);
+        ResponseEntity<String> response = new RestTemplate().postForEntity(authUrl, null, String.class, authUrlHeaders);
 
         return objectMapper.readTree(response.getBody());
     }
-
 
     private JsonNode getUserProfile(String accessToken) throws Exception {
         HttpHeaders headers = new HttpHeaders();
         headers.add("Authorization", "Bearer " + accessToken);
 
         String profileUrl = UriComponentsBuilder.fromHttpUrl("https://api.spotify.com/v1/me")
-            .build()
-            .toString();
+                .build()
+                .toString();
 
         HttpEntity<String> requestEntity = new HttpEntity<>(headers);
         ResponseEntity<String> response = new RestTemplate().exchange(
                 profileUrl,
                 HttpMethod.GET,
                 requestEntity,
-                String.class
-        );
+                String.class);
 
         return objectMapper.readTree(response.getBody());
     }
