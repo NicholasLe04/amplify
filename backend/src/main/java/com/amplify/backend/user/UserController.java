@@ -26,13 +26,4 @@ public class UserController {
         return userService.getUsers();
     }
 
-    @PostMapping
-    public User createUser(@RequestBody User user) {
-        return userService.createUser(user);
-    }
-
-    @PutMapping
-    public User updateUser(@RequestBody User user) {
-        return userService.updateUser(user);
-    }
 }

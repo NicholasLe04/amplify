@@ -19,18 +19,24 @@ export default function App() {
     const ProfileContext = createContext({ username: '', track: '', artists: [], artwork: '' })
     const [windowWidth, setWindowWidth] = useState(window.innerWidth)
 
-    // const profile = useQuery({
-    //     queryKey: ['nowPlaying'],
-    //     queryFn: async () => {
-    //         return fetch(
-    //             `${import.meta.env.VITE_APP_BACKEND_URL}/api/v1/spotify/now-playing`,
-    //             {
-    //                 method: 'GET',
-    //                 credentials: 'include'
-    //             }
-    //         ).then(res => res.json())
-    //     },
-    // }, queryClient)
+    const profile = useQuery({
+        queryKey: ['nowPlaying'],
+        queryFn: async () => {
+            const token = localStorage.getItem('access_token')
+            const res = await fetch(
+                'https://api.spotify.com/v1/me/player/currently-playing',
+                {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                }
+            )
+            const data = await res.json()
+            console.log(data)
+            return data
+        },
+    }, queryClient)
 
     // debounced window resize handler
     const debouncedHandleResize = lodash.throttle((size) => {

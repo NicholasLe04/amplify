@@ -64,3 +64,4 @@ build/
 
 ### CONFIG ###
 config.properties
+application.properties

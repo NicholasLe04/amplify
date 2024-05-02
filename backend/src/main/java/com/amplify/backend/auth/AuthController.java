@@ -6,7 +6,6 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,11 +18,10 @@ import com.amplify.backend.user.User;
 import com.amplify.backend.user.UserService;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 
 @RestController
 @RequestMapping("/api/v1/auth")
@@ -52,7 +50,7 @@ public class AuthController {
         String authUrl = UriComponentsBuilder.fromHttpUrl("https://accounts.spotify.com/authorize")
                 .queryParam("response_type", "code")
                 .queryParam("client_id", clientId)
-                .queryParam("scope", "user-read-private%20user-read-email")
+                .queryParam("scope", "user-read-private%20user-read-email%20user-read-playback-state")
                 .queryParam("redirect_uri", frontendUrl + "/callback")
                 .build()
                 .toString();
@@ -86,55 +84,15 @@ public class AuthController {
             e.printStackTrace();
         }
 
-        // Create sessionID
-        String sessionId = request.getSession(true).getId();
-
-        // Save user data to database
-        User user = new User(email, displayName, externalUrl, imgUrl, country, accessToken, refreshToken, sessionId);
-        // Create user, if user already exists, update their data
-        if (userService.createUser(user) == null) {
-            userService.updateUser(user);
-        }
-
-        // Create and add sessionID to cookie
-        Cookie cookie = new Cookie("JSESSIONID", sessionId);
-        cookie.setMaxAge(31536000);
-        cookie.setPath("/");
-        response.addCookie(cookie);
+        // Save / update user data to database
+        User user = new User(email, displayName, externalUrl, imgUrl, country);
+        userService.saveUser(user);
 
         // Return the user's access and refresh token
-        return "{\"session_id\": \"" + sessionId + "\"}";
-    }
-
-    @GetMapping("/session/validate")
-    public String validateSession(@CookieValue(value = "JSESSIONID", required = false) String sessionId,
-            HttpServletRequest request, HttpServletResponse response) {
-        System.out.println(sessionId);
-        if (sessionId == null) {
-            return "{\"status\":\"invalid\"}";
-        }
-        try {
-            userService.getUserBySessionId(sessionId);
-            return "{\"status\":\"valid\"}";
-        } catch (Exception e) {
-            return "{\"status\":\"invalid\"}";
-        }
-    }
-
-    @GetMapping("/logout")
-    public String logout(HttpServletRequest request, HttpServletResponse response) {
-        HttpSession session = request.getSession(false);
-        if (session != null) {
-            session.invalidate();
-        }
-
-        // If you need to explicitly remove the session cookie
-        Cookie cookie = new Cookie("JSESSIONID", "");
-        cookie.setMaxAge(0);
-        cookie.setPath("/");
-        response.addCookie(cookie);
-
-        return "logged out";
+        ObjectNode tokenObject = objectMapper.createObjectNode();
+        tokenObject.put("access_token", accessToken);
+        tokenObject.put("refresh_token", refreshToken);
+        return tokenObject.toString();
     }
 
     private JsonNode getUserTokens(String code) throws Exception {

@@ -1,9 +1,9 @@
-import { useNavigate } from 'react-router-dom'
-
 async function login() {
     const res = await fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/api/v1/auth/authorize`, {
         method: 'GET',
-        credentials: 'include'
+        headers: {
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+        }
     })
     const text = await res.text()
     window.location.href = text
@@ -11,33 +11,35 @@ async function login() {
 
 // we use useNavigate here to avoid reloading the page
 async function loginCallback(code: string) {
-    const navigate = useNavigate()
     const res = await fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/api/v1/auth/callback?code=${code}`, {
         method: 'GET',
-        credentials: 'include'
+        headers: {
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+        }
     })
-    const text = await res.text()
-    console.log(text)
-    navigate(`/home`)
+    const data = await res.json()
+    // store token in browser localStorage
+    console.log(data)
+    localStorage.setItem('access_token', data.access_token)
+    localStorage.setItem('refresh_token', data.refresh_token)
+    localStorage.setItem('uuid', data.uuid)
 }
 
 // we use useNavigate here to avoid reloading the page
 async function logout() {
-    const navigate = useNavigate()
-    await fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/api/v1/auth/logout`, {
-        method: 'GET',
-        credentials: 'include'
-    })
-    navigate('/')
+    localStorage.removeItem('token')
 }
 
+// checks if token is valid by calling spotify api
 async function isSessionValid() {
-    let response = await fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/api/v1/auth/session/validate`, {
+    let res = await fetch('https://api.spotify.com/v1/me', {
         method: 'GET',
-        credentials: 'include'
+        headers: {
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+        }
     })
-    const jsonResponse = await response.json()
-    if (jsonResponse.status === "valid") {
+    const jsonResponse = await res.json()
+    if (jsonResponse.status === 'valid') {
         return true
     } else {
         return false
