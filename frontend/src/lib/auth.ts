@@ -19,10 +19,12 @@ async function loginCallback(code: string) {
     })
     const data = await res.json()
     // store token in browser localStorage
-    console.log(data)
-    localStorage.setItem('access_token', data.access_token)
-    localStorage.setItem('refresh_token', data.refresh_token)
-    localStorage.setItem('uuid', data.uuid)
+    if (data.access_token) {
+        console.log(data)
+        localStorage.setItem('access_token', data.access_token)
+        localStorage.setItem('refresh_token', data.refresh_token)
+        localStorage.setItem('uuid', data.uuid)
+    }
 }
 
 // we use useNavigate here to avoid reloading the page
