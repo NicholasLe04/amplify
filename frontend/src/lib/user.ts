@@ -15,10 +15,7 @@ async function getNowPlaying() {
 // get user details
 async function getUserDetails() {
     const res = await fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/api/v1/users/${localStorage.getItem('email')}`, {
-        method: 'GET',
-        headers: {
-            'Authorization': `Bearer ${localStorage.getItem('access_token')}`
-        }
+        method: 'GET'
     })
     const json = await res.json()
     return json

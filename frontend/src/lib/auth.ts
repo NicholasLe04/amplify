@@ -31,10 +31,7 @@ async function loginCallback(code: string, setProfile: React.Dispatch<React.SetS
 
 async function refreshToken() {
     const res = await fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/api/v1/auth/refresh?code=${localStorage.getItem('refresh_token')}`, {
-        method: 'GET',
-        headers: {
-            'Authorization': `Bearer ${localStorage.getItem('access_token')}`
-        }
+        method: 'GET'
     })
     const data = await res.json()
     if (data.access_token) {
