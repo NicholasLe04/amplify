@@ -2,24 +2,19 @@ import { getUserDetails } from './user'
 
 async function login() {
     const res = await fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/api/v1/auth/authorize`, {
-        method: 'GET',
-        headers: {
-            'Authorization': `Bearer ${localStorage.getItem('access_token')}`
-        }
-    })
-    const text = await res.text()
-    window.location.href = text
+        method: 'GET'
+    });
+    const text = await res.text();
+    window.location.href = text;
 }
 
 // we use useNavigate here to avoid reloading the page
 async function loginCallback(code: string, setProfile: React.Dispatch<React.SetStateAction<{ displayName: string, imgUrl: string }>>) {
     const res = await fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/api/v1/auth/callback?code=${code}`, {
-        method: 'GET',
-        headers: {
-            'Authorization': `Bearer ${localStorage.getItem('access_token')}`
-        }
-    })
-    const data = await res.json()
+        method: 'GET'
+    });
+    const data = await res.json();
+
     // store token in browser localStorage
     if (data.access_token) {
         localStorage.setItem('access_token', data.access_token)
@@ -54,6 +49,9 @@ async function refreshToken() {
 // we use useNavigate here to avoid reloading the page
 async function logout() {
     localStorage.removeItem('access_token')
+    localStorage.removeItem('refresh_token')
+    localStorage.removeItem('expires_at')
+    localStorage.removeItem('email')
 }
 
 export { login, loginCallback, refreshToken, logout }

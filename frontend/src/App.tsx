@@ -1,7 +1,7 @@
 import { QueryClient } from '@tanstack/react-query'
 import lodash from 'lodash'
 import { useEffect, useState } from 'react'
-import { Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Callback from './common/Callback'
 import Wrapper from './common/Wrapper'
 import { refreshToken } from './lib/auth'
@@ -99,15 +99,22 @@ export default function App() {
                     {
                         windowWidth < 768 ?
                             // mobile
-                            <>
+                            <BrowserRouter>
                                 <MobileHeader />
-                            </>
+                                <Routes>
+                                    <Route path='/' element={<div>home page here</div>} />
+                                    <Route path='/callback' element={<Callback setAuthenticated={setAuthenticated} />} />
+                                </Routes>
+                            </BrowserRouter>
                             :
                             // web
-                            <>
+                            <BrowserRouter>
                                 <WebHeader authenticated={authenticated} setAuthenticated={setAuthenticated} />
-                                <div>home page here</div>
-                            </>
+                                <Routes>
+                                    <Route path='/' element={<div>home page here</div>} />
+                                    <Route path='/callback' element={<Callback setAuthenticated={setAuthenticated} />} />
+                                </Routes>
+                            </BrowserRouter>
                     }
                 </>
             }

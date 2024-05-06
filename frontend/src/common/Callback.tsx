@@ -18,8 +18,8 @@ export default function Callback({ setAuthenticated }: Props) {
     useEffect(() => {
         if (code) {
             loginCallback(code, profileContext.setProfile)
-            setAuthenticated(true)
-            navigate('/')
+            .then(() => {setAuthenticated(true)})
+            .then(() => {navigate('/')});
         } else {
             console.log(error)
         }
