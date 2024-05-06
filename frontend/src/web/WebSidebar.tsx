@@ -38,14 +38,18 @@ export default function WebSidebar() {
                 </div>
                 <div className='flex flex-col gap-3'>
                     {nowPlaying.isSuccess ?
-                        < div className='flex flex-col gap-3'>
+                        <div className='flex flex-col gap-3'>
                             <img className='' src={nowPlaying.data.item?.album.images[0].url} />
                             <div>
                                 <div className='truncate'>{nowPlaying.data.item?.name}</div>
                                 <div className='truncate text-gray-400'>{nowPlaying.data.item?.artists.map((artist: any) => { return artist.name }).join(', ')}</div>
                             </div>
                         </div>
-                        : 'loading'
+                        :
+                        <div className='flex flex-col gap-3'>
+                            <div className='bg-space-light rounded-xl h-48'></div>
+                            <div className='bg-space-light rounded-xl h-12'></div>
+                        </div>
                     }
                     <Link className='flex p-5 gap-5 bg-space-light rounded-xl' to='/profile'>
                         <GrUser className='my-auto' />
