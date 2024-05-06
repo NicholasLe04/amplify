@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import { login, logout } from '../lib/auth'
 import { ProfileContext } from '../lib/context'
 import { getUserDetails } from '../lib/user'
@@ -10,6 +10,8 @@ type Props = {
 
 export default function WebHeader({ authenticated, setAuthenticated }: Props) {
 
+    const [logoutMenu, setLogoutMenu] = useState(false)
+
     const profileContext = useContext(ProfileContext)
     console.log(profileContext.profile)
 
@@ -19,15 +21,16 @@ export default function WebHeader({ authenticated, setAuthenticated }: Props) {
                 <div className='text-lg'>Amplify</div>
                 {
                     authenticated ?
-                        <div className='flex gap-5'>
-                            <div className='flex gap-1'>
-                                <img src={profileContext.profile.imgUrl} alt='profile' className='w-8 h-8 rounded-full' />
-                                <div>{profileContext.profile.displayName}</div>
+                        logoutMenu ?
+                            <div className='text-lg px-2 bg-space-light rounded-lg' onClick={() => { logout(); setAuthenticated(false) }}>logout</div>
+                            :
+                            <div className='flex' onClick={() => { setLogoutMenu(!logoutMenu); setTimeout(() => { setLogoutMenu(false) }, 3000) }}>
+                                <img className='aspect-square rounded-full' src={profileContext.profile.imgUrl} alt='profile' />
+                                <div className='text-lg'>{profileContext.profile.displayName}</div>
                             </div>
-                            <div onClick={() => { logout(); setAuthenticated(false) }}>logout</div>
-                        </div>
+
                         :
-                        <div onClick={async () => { login() }}>login</div>
+                        <div className='text-lg' onClick={login}>login</div>
                 }
             </div>
         </>
