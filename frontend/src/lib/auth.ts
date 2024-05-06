@@ -1,3 +1,5 @@
+import { getUserDetails } from './user'
+
 async function login() {
     const res = await fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/api/v1/auth/authorize`, {
         method: 'GET',
@@ -10,7 +12,7 @@ async function login() {
 }
 
 // we use useNavigate here to avoid reloading the page
-async function loginCallback(code: string) {
+async function loginCallback(code: string, setProfile: React.Dispatch<React.SetStateAction<{ displayName: string, imgUrl: string }>>) {
     const res = await fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/api/v1/auth/callback?code=${code}`, {
         method: 'GET',
         headers: {
@@ -22,11 +24,14 @@ async function loginCallback(code: string) {
     if (data.access_token) {
         localStorage.setItem('access_token', data.access_token)
         localStorage.setItem('refresh_token', data.refresh_token)
-        localStorage.setItem('uuid', data.uuid)
+        localStorage.setItem('email', data.email)
         let date = new Date()
         date.setSeconds(date.getSeconds() + data.expires_in)
         localStorage.setItem('expires_at', date.toISOString())
     }
+
+    const userDetails = await getUserDetails()
+    setProfile(userDetails)
 }
 
 async function refreshToken() {

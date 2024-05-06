@@ -92,6 +92,7 @@ public class AuthController {
 
         // Return the user's access and refresh token
         ObjectNode tokenObject = objectMapper.createObjectNode();
+        tokenObject.put("email", email);
         tokenObject.put("access_token", accessToken);
         tokenObject.put("refresh_token", refreshToken);
         tokenObject.put("expires_in", expiresIn);

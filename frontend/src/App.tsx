@@ -1,24 +1,24 @@
 import { QueryClient } from '@tanstack/react-query'
 import lodash from 'lodash'
-import { createContext, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Route, Routes } from 'react-router-dom'
+import Callback from './common/Callback'
 import Wrapper from './common/Wrapper'
+import { refreshToken } from './lib/auth'
+import MobileFooter from './mobile/MobileFooter'
+import MobileHeader from './mobile/MobileHeader'
 import MobileHome from './mobile/MobileHome'
+import MobileProfile from './mobile/MobileProfile'
+import WebHeader from './web/WebHeader'
 import WebHome from './web/WebHome'
 import WebProfile from './web/WebProfile'
-import MobileProfile from './mobile/MobileProfile'
 import WebSidebar from './web/WebSidebar'
-import WebHeader from './web/WebHeader'
-import MobileHeader from './mobile/MobileHeader'
-import MobileFooter from './mobile/MobileFooter'
-import Callback from './common/Callback'
-import { refreshToken } from './lib/auth'
 
 export default function App() {
 
     const queryClient = new QueryClient()
-    const ProfileContext = createContext({ username: '', track: '', artists: [], artwork: '' })
     const [authenticated, setAuthenticated] = useState(false)
+    const [profile, setProfile] = useState({ displayName: '', imgUrl: '' })
     const [windowWidth, setWindowWidth] = useState(window.innerWidth)
 
     // debounced window resize handler
@@ -64,7 +64,7 @@ export default function App() {
     return (
         <>
             {authenticated ?
-                <Wrapper queryClient={queryClient} ProfileContext={ProfileContext}>
+                <Wrapper queryClient={queryClient} profile={profile} setProfile={setProfile}>
                     {
                         windowWidth < 768 ?
                             // mobile

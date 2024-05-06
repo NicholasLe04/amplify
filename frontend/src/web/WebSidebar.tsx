@@ -1,25 +1,13 @@
 import { Link } from 'react-router-dom'
 import { GrHomeRounded, GrSearch, GrUser } from 'react-icons/gr'
 import { useQuery } from '@tanstack/react-query'
+import { getNowPlaying } from '../lib/user'
 
 export default function WebSidebar() {
 
     const nowPlaying = useQuery({
         queryKey: ['nowPlaying'],
-        queryFn: async () => {
-            const token = localStorage.getItem('access_token')
-            const res = await fetch(
-                'https://api.spotify.com/v1/me/player/currently-playing',
-                {
-                    method: 'GET',
-                    headers: {
-                        'Authorization': `Bearer ${token}`
-                    }
-                }
-            )
-            const data = await res.json()
-            return data
-        },
+        queryFn: getNowPlaying,
         refetchInterval: 1000
     })
 
