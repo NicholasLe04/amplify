@@ -8,6 +8,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -62,11 +63,12 @@ public class AuthController {
     public String callback(@RequestParam String code, HttpServletRequest request, HttpServletResponse response) {
 
         // Get and parse user tokens
-        String accessToken = "", refreshToken = "";
+        String accessToken = "", refreshToken = "", expiresIn = "";
         try {
             JsonNode tokenRoot = getUserTokens(code);
             accessToken = tokenRoot.get("access_token").asText();
             refreshToken = tokenRoot.get("refresh_token").asText();
+            expiresIn = tokenRoot.get("expires_in").asText();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -92,7 +94,25 @@ public class AuthController {
         ObjectNode tokenObject = objectMapper.createObjectNode();
         tokenObject.put("access_token", accessToken);
         tokenObject.put("refresh_token", refreshToken);
+        tokenObject.put("expires_in", expiresIn);
         return tokenObject.toString();
+    }
+
+    @GetMapping("/refresh")
+    private JsonNode refreshToken(String code) throws Exception {
+        HttpHeaders authUrlHeaders = new HttpHeaders();
+        authUrlHeaders.add("content-type", "application/x-www-form-urlencoded");
+
+        String authUrl = UriComponentsBuilder.fromHttpUrl("https://accounts.spotify.com/api/token")
+                .queryParam("grant_type", "refresh_token")
+                .queryParam("refresh_token", code)
+                .queryParam("client_id", clientId)
+                .build()
+                .toString();
+
+        ResponseEntity<String> response = new RestTemplate().postForEntity(authUrl, null, String.class, authUrlHeaders);
+
+        return objectMapper.readTree(response.getBody());
     }
 
     private JsonNode getUserTokens(String code) throws Exception {
