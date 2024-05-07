@@ -16,10 +16,10 @@ export default function Callback({ setAuthenticated }: Props) {
     const error = searchParams.get('error')
 
     useEffect(() => {
-        if (code) {
-            loginCallback(code, profileContext.setProfile)
-            .then(() => {setAuthenticated(true)})
-            .then(() => {navigate('/')});
+        if (code && profileContext) {
+            loginCallback(code)
+                .then(() => { setAuthenticated(true) })
+                .then(() => { navigate('/') });
         } else {
             console.log(error)
         }

@@ -17,7 +17,7 @@ async function login() {
 }
 
 // we use useNavigate here to avoid reloading the page
-async function loginCallback(code: string, setProfile: React.Dispatch<React.SetStateAction<Profile>>) {
+async function loginCallback(code: string) {
     const res = await fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/api/v1/auth/callback?code=${code}`, {
         method: 'GET'
     });
@@ -32,9 +32,6 @@ async function loginCallback(code: string, setProfile: React.Dispatch<React.SetS
         date.setSeconds(date.getSeconds() + data.expires_in)
         localStorage.setItem('expires_at', date.toISOString())
     }
-
-    const userDetails = await getUserDetails(data.email)
-    setProfile(userDetails)
 }
 
 async function refreshToken() {

@@ -1,5 +1,7 @@
 package com.amplify.backend.user;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +22,11 @@ public class UserController {
     @GetMapping("/{email}")
     public User getUserByEmail(@PathVariable String email) {
         return userService.getUserByEmail(email);
+    }
+
+    @GetMapping("/recommended/{email}")
+    public List<User> getRecommendedUsers(@PathVariable String email) {
+        return userService.getRecommendedUsers(email);
     }
 
 }

@@ -1,5 +1,6 @@
 package com.amplify.backend.user;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -100,12 +100,21 @@ public class UserService {
             e.printStackTrace();
         }
 
-        // userRepositoryVector.save(user.getEmail());
         return userRepository.save(user);
     }
 
     public User getUserByEmail(String email) {
         return userRepository.findByEmail(email)
                 .orElseThrow(() -> new IllegalStateException("User with email " + email + " not found"));
+    }
+
+    public List<User> getRecommendedUsers(String email) {
+        List<Float> userVector = userRepositoryVector.findByEmail(email);
+        List<String> emails = userRepositoryVector.findByVector(userVector);
+        List<User> users = new ArrayList<>();
+        for (String resEmail : emails) {
+            users.add(userRepository.findByEmail(resEmail).get());
+        }
+        return users;
     }
 }

@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
 
 import com.alibaba.fastjson.JSONObject;
 
-import io.milvus.param.IndexType;
 import io.milvus.v2.client.MilvusClientV2;
 import io.milvus.v2.common.DataType;
 import io.milvus.v2.common.IndexParam;
@@ -17,8 +16,10 @@ import io.milvus.v2.service.collection.request.AddFieldReq;
 import io.milvus.v2.service.collection.request.CreateCollectionReq;
 import io.milvus.v2.service.collection.request.HasCollectionReq;
 import io.milvus.v2.service.index.request.CreateIndexReq;
+import io.milvus.v2.service.vector.request.GetReq;
 import io.milvus.v2.service.vector.request.InsertReq;
 import io.milvus.v2.service.vector.request.SearchReq;
+import io.milvus.v2.service.vector.response.GetResp;
 import io.milvus.v2.service.vector.response.SearchResp;
 
 @Repository
@@ -83,22 +84,26 @@ public class UserRepositoryVector {
                 .build());
     }
 
-    public List<User> findByVector(List<Float> vector) {
+    public List<String> findByVector(List<Float> vector) {
         // search milvus for similar vectors
         SearchResp res = milvusClient.search(SearchReq.builder()
                 .collectionName("users")
-                .data(vector)
+                .data(Collections.singletonList(vector))
                 .topK(10)
                 .build());
-
-        res.getSearchResults();
-        System.out.println(res.getSearchResults());
-        return null;
+        ArrayList<String> userEmails = new ArrayList<>();
+        for (SearchResp.SearchResult user : res.getSearchResults().get(0)) {
+            userEmails.add(user.getId().toString());
+        }
+        return userEmails;
     }
 
-    public User findByEmail(String email) {
-        // get user from milvus
-        return null;
+    public List<Float> findByEmail(String email) {
+        GetResp res = milvusClient.get(GetReq.builder()
+                .collectionName("users")
+                .ids(Collections.singletonList(email))
+                .build());
+        return (List<Float>) res.getGetResults().get(0).getEntity().get("features");
     }
 
 }

@@ -8,15 +8,6 @@ type Profile = {
     displayName: string
 }
 
-const ProfileContext = createContext<{ profile: Profile, setProfile: React.Dispatch<React.SetStateAction<Profile>> }>({
-    profile: {
-        email: '',
-        country: '',
-        externalUrl: '',
-        imgUrl: '',
-        displayName: ''
-    },
-    setProfile: () => { }
-})
+const ProfileContext = createContext<{ profile: Profile, setProfile: React.Dispatch<React.SetStateAction<Profile>> } | null>(null)
 
 export { ProfileContext }

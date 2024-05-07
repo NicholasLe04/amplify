@@ -5,19 +5,19 @@ import { ProfileContext } from '../lib/context'
 
 type Props = {
     queryClient: QueryClient,
-    profile: { 
-        email: string, 
-        country: string, 
-        externalUrl: string, 
+    profile: {
+        email: string,
+        country: string,
+        externalUrl: string,
         imgUrl: string,
-        displayName: string 
+        displayName: string
     },
-    setProfile: React.Dispatch<React.SetStateAction<{ 
-        email: string, 
-        country: string, 
-        externalUrl: string, 
+    setProfile: React.Dispatch<React.SetStateAction<{
+        email: string,
+        country: string,
+        externalUrl: string,
         imgUrl: string,
-        displayName: string 
+        displayName: string
     }>>,
     children: React.ReactNode
 }
