@@ -10,6 +10,10 @@ export default function WebCreatePostPopup({ setShowCreatePostForm }: Props) {
     const [spotifyLink, setSpotifyLink] = useState("");
     const [caption, setCaption] = useState("");
 
+    function getPostType(spotifyUrl: string): string {
+        return spotifyUrl.split('/')[3];
+    }
+
     function onFormSubmit(email: string, description: string, spotifyUrl: string) {
         console.log(email, description, spotifyUrl);
         if (email === null || spotifyUrl === "") {
@@ -25,7 +29,7 @@ export default function WebCreatePostPopup({ setShowCreatePostForm }: Props) {
                 method: 'GET'
             }).then(response => {
                 if (response.ok) {
-                    createPost(email, description, spotifyUrl)
+                    createPost(email, getPostType(spotifyUrl), description, spotifyUrl)
                     setShowCreatePostForm(false);
                 }
                 else {

@@ -9,6 +9,7 @@ type User = {
 type Post = {
     id: number,
     spotifyUrl: string,
+    type: string,
     description: string,
     postedAt: string,
     author: User
@@ -27,19 +28,26 @@ export default function Post({ post }: Props) {
         return embedUrl;
     }
 
-    function getPostType(spotifyUrl: string): string {
-        return spotifyUrl.split('/')[3];
-    }
+    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
 
-    const postType = getPostType(post.spotifyUrl);
+    const date = new Date(post.postedAt);
+    const day = date.getDate();
+    const monthIndex = date.getMonth();
+    const monthName = months[monthIndex];
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+    const time = `${hours % 12 || 12}:${minutes < 10 ? '0' : ''}${minutes} ${hours < 12 ? 'AM' : 'PM'}`;
 
     return (
-        <div key={post.id} className="flex flex-col gap-3 bg-space-light rounded-xl p-6 h-min">
-            <div className="flex items-center">
-                <img className="aspect-square rounded-full w-8" src={post.author.imgUrl} />
-                <p className="text-white ml-2">{post.author.displayName} is sharing {postType === 'artist' ? 'an' : 'a'} {postType}</p>
+        <div key={post.id} className="bg-space-light rounded-xl p-6 flex flex-col gap-3">
+            <div className="flex justify-between">
+                <div className='flex gap-3'>
+                    <img className="rounded-full aspect-square" width={32} src={post.author.imgUrl} />
+                    <p className="text-white my-auto">{post.author.displayName} is sharing {post.type === 'artist' || post.type === 'album' || post.type === 'episode' ? 'an' : 'a'} {post.type}</p>
+                </div>
+                <p className="text-sm text-gray-400 my-auto">{monthName} {day} at {time}</p>
             </div>
-            {postType === 'track' ?
+            {post.type === 'track' ?
                 < iframe
                     width="100%"
                     height="80px"
@@ -47,7 +55,7 @@ export default function Post({ post }: Props) {
                     src={convertToEmbedUrl(post.spotifyUrl)}
                 /> : null
             }
-            {postType === 'album' ?
+            {post.type === 'album' ?
                 < iframe
                     width="100%"
                     height="420px"
@@ -55,7 +63,7 @@ export default function Post({ post }: Props) {
                     src={convertToEmbedUrl(post.spotifyUrl)}
                 /> : null
             }
-            {postType === 'playlist' ?
+            {post.type === 'playlist' ?
                 < iframe
                     width="100%"
                     height="420px"
@@ -63,7 +71,7 @@ export default function Post({ post }: Props) {
                     src={convertToEmbedUrl(post.spotifyUrl)}
                 /> : null
             }
-            {postType === 'artist' ?
+            {post.type === 'artist' ?
                 < iframe
                     width="100%"
                     height="420px"

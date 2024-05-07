@@ -4,6 +4,8 @@ import com.amplify.backend.user.User;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -25,6 +27,10 @@ public class Post {
     @Column(name="posted_at")
     private LocalDateTime postedAt;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name="type")
+    private PostType type;
+
     @ManyToOne
     private User author;
     private String description;
@@ -32,8 +38,9 @@ public class Post {
     protected Post() {
     }
 
-    public Post(String spotifyUrl, String description, User author) {
+    public Post(String spotifyUrl, PostType type, String description, User author) {
         this.spotifyUrl = spotifyUrl;
+        this.type = type;
         this.description = description;
         this.postedAt = LocalDateTime.now();
         this.author = author;
@@ -55,6 +62,10 @@ public class Post {
         return postedAt;
     }
 
+    public PostType getType() {
+        return type;
+    }
+
     public User getAuthor() {
         return author;
     }
@@ -69,6 +80,10 @@ public class Post {
 
     public void setPostedAt(LocalDateTime postedAt) {
         this.postedAt = postedAt;
+    }
+
+    public void setType(PostType type) {
+        this.type = type;
     }
 
     public void setAuthor(User author) {
