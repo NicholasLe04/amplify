@@ -1,5 +1,6 @@
 package com.amplify.backend.user;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -11,18 +12,20 @@ public class User {
     @Id
     private String email;
     private String display_name;
-    private String external_url;
-    private String img_url;
     private String country;
+    @Column(name = "external_url")
+    private String externalUrl;
+    @Column(name = "img_url")
+    private String imgUrl;
 
     protected User() {
     }
 
-    public User(String email, String display_name, String external_url, String img_url, String country) {
+    public User(String email, String display_name, String externalUrl, String imgUrl, String country) {
         this.email = email;
         this.display_name = display_name;
-        this.external_url = external_url;
-        this.img_url = img_url;
+        this.externalUrl = externalUrl;
+        this.imgUrl = imgUrl;
         this.country = country;
     }
 
@@ -35,11 +38,11 @@ public class User {
     }
 
     public String getExternalUrl() {
-        return external_url;
+        return externalUrl;
     }
 
     public String getImgUrl() {
-        return img_url;
+        return imgUrl;
     }
 
     public String getCountry() {
@@ -54,12 +57,12 @@ public class User {
         this.display_name = display_name;
     }
 
-    public void setExternalUrl(String external_url) {
-        this.external_url = external_url;
+    public void setExternalUrl(String externalUrl) {
+        this.externalUrl = externalUrl;
     }
 
-    public void setImgUrl(String img_url) {
-        this.img_url = img_url;
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
     }
 
     public void setCountry(String country) {
@@ -70,8 +73,8 @@ public class User {
     public String toString() {
         return "User [email=" + email +
                 ", display_name=" + display_name +
-                ", external_url=" + external_url +
-                ", img_url=" + img_url +
+                ", externalUrl=" + externalUrl +
+                ", imgUrl=" + imgUrl +
                 ", country=" + country + "]";
     }
 }
