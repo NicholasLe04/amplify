@@ -1,9 +1,13 @@
 import { Link } from 'react-router-dom'
-import { GrHomeRounded, GrSearch, GrUser } from 'react-icons/gr'
+import { GrHomeRounded, GrSearch, GrUser, GrAdd } from 'react-icons/gr'
 import { useQuery } from '@tanstack/react-query'
 import { getNowPlaying } from '../lib/user'
+import { useState } from 'react';
+import WebCreatePostPopup from './WebCreatePostForm';
 
 export default function WebSidebar() {
+
+    const [showCreatePostForm, setShowCreatePostForm] = useState(false);
 
     const nowPlaying = useQuery({
         queryKey: ['nowPlaying'],
@@ -13,6 +17,7 @@ export default function WebSidebar() {
 
     return (
         <>
+            {showCreatePostForm ? <WebCreatePostPopup setShowCreatePostForm={setShowCreatePostForm} /> : null}
             <div className='w-60 h-full px-5 py-10 flex flex-col justify-between border-r-4 border-space-light'>
                 <div className='flex flex-col gap-3'>
                     <Link className='flex p-5 gap-5 bg-space-light rounded-xl' to='/'>
@@ -22,6 +27,10 @@ export default function WebSidebar() {
                     <div className='flex p-5 gap-5 bg-space-light rounded-xl' onClick={() => { console.log('unimplemented') }}>
                         <GrSearch className='my-auto' />
                         <div className='flex-1 text-lg'>Search</div>
+                    </div>
+                    <div className='flex p-5 gap-5 bg-space-light rounded-xl' onClick={() => { setShowCreatePostForm(true) }}>
+                        <GrAdd className='my-auto' />
+                        <div className='flex-1 text-lg'>Create Post</div>
                     </div>
                 </div>
                 <div className='flex flex-col gap-3'>

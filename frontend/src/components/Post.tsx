@@ -34,7 +34,7 @@ export default function Post({post}: Props) {
     const postType = getPostType(post.spotifyUrl);
 
     return (
-        <div key={post.id} className="bg-space-light rounded-lg p-4 mb-4">
+        <div key={post.id} className="bg-space-light rounded-lg p-6 mb-4">
             <div className="flex items-center mb-2">
                 <img className="rounded-full" width={32} src={post.author.imgUrl} />
                 <p className="text-white ml-2">{post.author.displayName} is sharing {postType === 'artist' ? 'an' : 'a'} {postType}</p>

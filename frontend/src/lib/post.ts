@@ -14,4 +14,20 @@ async function getUserPosts(email: string) {
     return json
 }
 
-export { getRecentPosts, getUserPosts }
+async function createPost(email: string, description: string, spotifyUrl: string) {
+    const res = await fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/api/v1/posts`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            authorEmail: email,
+            description: description,
+            spotifyUrl: spotifyUrl
+        })
+    })
+    const json = await res.json()
+    return json
+}
+
+export { getRecentPosts, getUserPosts, createPost }

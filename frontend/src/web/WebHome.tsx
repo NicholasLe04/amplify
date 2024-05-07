@@ -17,7 +17,7 @@ export default function WebHome() {
         <>
             <div className='flex flex-col items-center p-6 overflow-scroll'>
                 <h1 className="text-2xl font-bold mb-4">Recent Posts</h1>
-                <div className='w-full w-6/12'>
+                <div className='w-1/2'>
                     {recentPosts.map((post: any) => (
                         <Post post={post}/>
                     ))}
