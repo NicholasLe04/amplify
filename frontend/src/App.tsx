@@ -13,12 +13,19 @@ import WebHeader from './web/WebHeader'
 import WebHome from './web/WebHome'
 import WebProfile from './web/WebProfile'
 import WebSidebar from './web/WebSidebar'
+import { getUserDetails } from './lib/user'
 
 export default function App() {
 
     const queryClient = new QueryClient()
     const [authenticated, setAuthenticated] = useState(false)
-    const [profile, setProfile] = useState({ displayName: '', imgUrl: '' })
+    const [profile, setProfile] = useState({ 
+        email: '', 
+        country: '', 
+        externalUrl: '', 
+        imgUrl: '',
+        displayName: '' 
+    })
     const [windowWidth, setWindowWidth] = useState(window.innerWidth)
 
     // debounced window resize handler
@@ -37,6 +44,9 @@ export default function App() {
                 } else {
                     setAuthenticated(true)
                 }
+                getUserDetails().then((data) => {
+                    setProfile(data)
+                })
             } else { // if doesnt exist, make them login
                 setAuthenticated(false)
             }

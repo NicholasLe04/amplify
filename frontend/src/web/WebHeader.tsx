@@ -1,7 +1,6 @@
 import { useContext, useState } from 'react'
 import { login, logout } from '../lib/auth'
 import { ProfileContext } from '../lib/context'
-import { getUserDetails } from '../lib/user'
 
 type Props = {
     authenticated: boolean,
@@ -11,9 +10,7 @@ type Props = {
 export default function WebHeader({ authenticated, setAuthenticated }: Props) {
 
     const [logoutMenu, setLogoutMenu] = useState(false)
-
     const profileContext = useContext(ProfileContext)
-    console.log(profileContext.profile)
 
     return (
         <>
@@ -25,7 +22,7 @@ export default function WebHeader({ authenticated, setAuthenticated }: Props) {
                             <div className='text-lg px-2 bg-space-light rounded-lg' onClick={() => { logout(); setAuthenticated(false) }}>logout</div>
                             :
                             <div className='flex' onClick={() => { setLogoutMenu(!logoutMenu); setTimeout(() => { setLogoutMenu(false) }, 3000) }}>
-                                <img className='aspect-square rounded-full' src={profileContext.profile.imgUrl} alt='profile' />
+                                <img className='aspect-square rounded-full mr-2' width={30} src={profileContext.profile.imgUrl} alt='profile' />
                                 <div className='text-lg'>{profileContext.profile.displayName}</div>
                             </div>
 

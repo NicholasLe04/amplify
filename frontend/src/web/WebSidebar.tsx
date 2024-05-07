@@ -15,7 +15,7 @@ export default function WebSidebar() {
         <>
             <div className='w-60 h-full px-5 py-10 flex flex-col justify-between border-r-4 border-space-light'>
                 <div className='flex flex-col gap-3'>
-                    <Link className='flex p-5 gap-5 bg-space-light rounded-xl' to='/home'>
+                    <Link className='flex p-5 gap-5 bg-space-light rounded-xl' to='/'>
                         <GrHomeRounded className='my-auto' />
                         <div className='flex-1 text-lg'>Home</div>
                     </Link>

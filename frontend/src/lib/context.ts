@@ -1,8 +1,31 @@
 import { createContext } from 'react'
 
 const ProfileContext = createContext<{
-    profile: { displayName: string, imgUrl: string },
-    setProfile: React.Dispatch<React.SetStateAction<{ displayName: string, imgUrl: string }>>
-}>({ profile: { displayName: '', imgUrl: '' }, setProfile: () => { } })
+    profile: { 
+        email: string, 
+        country: string, 
+        externalUrl: string, 
+        imgUrl: string,
+        displayName: string 
+    },
+    setProfile: React.Dispatch<React.SetStateAction<{ 
+        email: string, 
+        country: string, 
+        externalUrl: string, 
+        imgUrl: string,
+        displayName: string 
+    }>>
+}>(
+    { 
+        profile: { 
+            email: '', 
+            country: '', 
+            externalUrl: '', 
+            imgUrl: '',
+            displayName: '' 
+        }, 
+        setProfile: () => {} 
+    }
+)
 
 export { ProfileContext }
