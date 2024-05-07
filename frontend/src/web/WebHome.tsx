@@ -15,11 +15,11 @@ export default function WebHome() {
 
     return (
         <>
-            <div className='flex flex-col items-center p-6 overflow-scroll'>
-                <h1 className="text-2xl font-bold mb-4">Recent Posts</h1>
+            <div className='flex flex-col items-center p-6 overflow-y-scrol h-full w-full'>
+                <div className="text-2xl font-bold mb-4">Recent Posts</div>
                 <div className='w-1/2'>
                     {recentPosts.map((post: any) => (
-                        <Post post={post}/>
+                        <Post post={post} />
                     ))}
                 </div>
             </div>

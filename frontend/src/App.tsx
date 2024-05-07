@@ -19,12 +19,12 @@ export default function App() {
 
     const queryClient = new QueryClient()
     const [authenticated, setAuthenticated] = useState(false)
-    const [profile, setProfile] = useState({ 
-        email: '', 
-        country: '', 
-        externalUrl: '', 
+    const [profile, setProfile] = useState({
+        email: '',
+        country: '',
+        externalUrl: '',
         imgUrl: '',
-        displayName: '' 
+        displayName: ''
     })
     const [windowWidth, setWindowWidth] = useState(window.innerWidth)
 

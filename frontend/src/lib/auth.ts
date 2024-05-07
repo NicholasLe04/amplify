@@ -1,5 +1,13 @@
 import { getUserDetails } from './user'
 
+type Profile = {
+    email: string,
+    country: string,
+    externalUrl: string,
+    imgUrl: string,
+    displayName: string
+}
+
 async function login() {
     const res = await fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/api/v1/auth/authorize`, {
         method: 'GET'
@@ -9,7 +17,7 @@ async function login() {
 }
 
 // we use useNavigate here to avoid reloading the page
-async function loginCallback(code: string, setProfile: React.Dispatch<React.SetStateAction<{ displayName: string, imgUrl: string }>>) {
+async function loginCallback(code: string, setProfile: React.Dispatch<React.SetStateAction<Profile>>) {
     const res = await fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/api/v1/auth/callback?code=${code}`, {
         method: 'GET'
     });
@@ -25,7 +33,7 @@ async function loginCallback(code: string, setProfile: React.Dispatch<React.SetS
         localStorage.setItem('expires_at', date.toISOString())
     }
 
-    const userDetails = await getUserDetails()
+    const userDetails = await getUserDetails(data.email)
     setProfile(userDetails)
 }
 
@@ -43,7 +51,6 @@ async function refreshToken() {
     }
 }
 
-// we use useNavigate here to avoid reloading the page
 async function logout() {
     localStorage.removeItem('access_token')
     localStorage.removeItem('refresh_token')

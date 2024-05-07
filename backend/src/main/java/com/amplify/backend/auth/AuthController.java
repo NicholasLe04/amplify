@@ -51,7 +51,7 @@ public class AuthController {
         String authUrl = UriComponentsBuilder.fromHttpUrl("https://accounts.spotify.com/authorize")
                 .queryParam("response_type", "code")
                 .queryParam("client_id", clientId)
-                .queryParam("scope", "user-read-private%20user-read-email%20user-read-playback-state")
+                .queryParam("scope", "user-read-private%20user-read-email%20user-read-playback-state%20user-top-read")
                 .queryParam("redirect_uri", frontendUrl + "/callback")
                 .build()
                 .toString();
@@ -88,7 +88,7 @@ public class AuthController {
 
         // Save / update user data to database
         User user = new User(email, displayName, externalUrl, imgUrl, country);
-        userService.saveUser(user);
+        userService.saveUser(user, accessToken);
 
         // Return the user's access and refresh token
         ObjectNode tokenObject = objectMapper.createObjectNode();
