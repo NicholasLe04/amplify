@@ -20,7 +20,7 @@ export default function WebHeader({ authenticated, setAuthenticated }: Props) {
                 getUserDetails().then((data) => {
                     profileContext?.setProfile(data)
                 })
-            }, 100)
+            }, 500)
         }
     }, [])
 
