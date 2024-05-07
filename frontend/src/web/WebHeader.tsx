@@ -45,7 +45,7 @@ export default function WebHeader({ authenticated, setAuthenticated }: Props) {
                             </div>
 
                         :
-                        <div className='text-lg' onClick={login}>login</div>
+                        <div className='text-lg px-2 bg-space-light rounded-lg' onClick={login}>login</div>
                 }
             </div>
         </>
