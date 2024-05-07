@@ -32,11 +32,11 @@ public class PostService {
         return postRepository.findAllByOrderByPostedAtDesc(PageRequest.of(page, size)).getContent();
     }
 
-    public Post createPost(String spotifyUrl, String description, String authorEmail) {
+    public Post createPost(String spotifyUrl, PostType type, String description, String authorEmail) {
         User author = userRepository.findByEmail(authorEmail)
                 .orElseThrow(() -> new IllegalStateException("User " + authorEmail + " not found"));
 
-        Post post = new Post(spotifyUrl, description, author);
+        Post post = new Post(spotifyUrl, type, description, author);
         return postRepository.save(post);
     }
 }

@@ -37,6 +37,6 @@ public class PostController {
 
     @PostMapping
     public Post createPost(@RequestBody PostDTO postDTO) {
-        return postService.createPost(postDTO.getSpotifyUrl(), postDTO.getDescription(), postDTO.getAuthorEmail());
+        return postService.createPost(postDTO.getSpotifyUrl(), postDTO.getType(), postDTO.getDescription(), postDTO.getAuthorEmail());
     }
 }
