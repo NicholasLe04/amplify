@@ -2,7 +2,7 @@ import { useState } from "react";
 import { createPost } from "../lib/post"
 
 type Props = {
-  setShowCreatePostForm: React.Dispatch<React.SetStateAction<boolean>>
+    setShowCreatePostForm: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 export default function WebCreatePostPopup({ setShowCreatePostForm }: Props) {
@@ -21,7 +21,7 @@ export default function WebCreatePostPopup({ setShowCreatePostForm }: Props) {
             return;
         }
         else {
-            fetch('https://open.spotify.com/oembed?url=' + spotifyUrl, {
+            fetch(`https://open.spotify.com/oembed?url=${spotifyUrl}`, {
                 method: 'GET'
             }).then(response => {
                 if (response.ok) {
@@ -44,17 +44,17 @@ export default function WebCreatePostPopup({ setShowCreatePostForm }: Props) {
                 <div className="flex flex-col gap-2">
                     <div>
                         Spotify Link
-                        <input className="w-full p-2 rounded-md bg-space-light" type="text" onChange={(e) => {setSpotifyLink(e.target.value)}} />    
+                        <input className="w-full p-2 rounded-md bg-space-light" type="text" onChange={(e) => { setSpotifyLink(e.target.value) }} />
                     </div>
                     <div>
                         Caption
-                        <textarea className="w-full p-2 rounded-md bg-space-light min-h-52 max-h-52" onChange={(e) => {setCaption(e.target.value)}} />    
+                        <textarea className="w-full p-2 rounded-md bg-space-light min-h-52 max-h-52" onChange={(e) => { setCaption(e.target.value) }} />
                     </div>
                 </div>
                 <div className="absolute bottom-8 right-10 flex gap-2">
                     <div className="bg-red-500 p-2 w-[85px] text-center rounded-md hover:bg-red-400 transition ease-in-out duration-100" onClick={() => { setShowCreatePostForm(false) }}>Cancel</div>
-                    <div 
-                        className="bg-blue-400 p-2 w-[85px] text-center rounded-md hover:bg-blue-300 transition ease-in-out duration-100" 
+                    <div
+                        className="bg-blue-400 p-2 w-[85px] text-center rounded-md hover:bg-blue-300 transition ease-in-out duration-100"
                         onClick={() => { setShowCreatePostForm(false); onFormSubmit(localStorage.getItem("email"), caption, spotifyLink) }}
                     >
                         Confirm

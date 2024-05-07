@@ -35,6 +35,7 @@ async function loginCallback(code: string) {
 }
 
 async function refreshToken() {
+    console.log('refresh')
     const res = await fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/api/v1/auth/refresh?code=${localStorage.getItem('refresh_token')}`, {
         method: 'GET'
     })

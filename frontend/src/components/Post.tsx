@@ -18,7 +18,7 @@ type Props = {
     post: Post
 }
 
-export default function Post({post}: Props) {
+export default function Post({ post }: Props) {
 
     function convertToEmbedUrl(spotifyUrl: string): string {
         const urlParts = spotifyUrl.split('/');
@@ -34,18 +34,44 @@ export default function Post({post}: Props) {
     const postType = getPostType(post.spotifyUrl);
 
     return (
-        <div key={post.id} className="bg-space-light rounded-lg p-6 mb-4">
-            <div className="flex items-center mb-2">
-                <img className="rounded-full" width={32} src={post.author.imgUrl} />
+        <div key={post.id} className="flex flex-col gap-3 bg-space-light rounded-xl p-6 h-min">
+            <div className="flex items-center">
+                <img className="aspect-square rounded-full w-8" src={post.author.imgUrl} />
                 <p className="text-white ml-2">{post.author.displayName} is sharing {postType === 'artist' ? 'an' : 'a'} {postType}</p>
             </div>
-            <p className="text-sm text-white font-thin tracking-wider mb-4">{post.description}</p>
-            <iframe
-                width="100%" 
-                height="152" 
-                title="Spotify Embed" 
-                src={convertToEmbedUrl(post.spotifyUrl)} 
-            />
+            {postType === 'track' ?
+                < iframe
+                    width="100%"
+                    height="80px"
+                    title="Spotify Embed"
+                    src={convertToEmbedUrl(post.spotifyUrl)}
+                /> : null
+            }
+            {postType === 'album' ?
+                < iframe
+                    width="100%"
+                    height="420px"
+                    title="Spotify Embed"
+                    src={convertToEmbedUrl(post.spotifyUrl)}
+                /> : null
+            }
+            {postType === 'playlist' ?
+                < iframe
+                    width="100%"
+                    height="420px"
+                    title="Spotify Embed"
+                    src={convertToEmbedUrl(post.spotifyUrl)}
+                /> : null
+            }
+            {postType === 'artist' ?
+                < iframe
+                    width="100%"
+                    height="420px"
+                    title="Spotify Embed"
+                    src={convertToEmbedUrl(post.spotifyUrl)}
+                /> : null
+            }
+            <p className="text-sm text-white font-thin tracking-wider">{post.description}</p>
         </div>
     )
 }
