@@ -1,4 +1,4 @@
-async function getRecentPosts(page: number, size:number = 10) {
+async function getRecentPosts(page: number, size: number = 10) {
     const res = await fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/api/v1/posts?page=${page}&size=${size}`, {
         method: 'GET'
     })
@@ -18,7 +18,8 @@ async function createPost(email: string, type: string, description: string, spot
     const res = await fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/api/v1/posts`, {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('access_token')}`
         },
         body: JSON.stringify({
             authorEmail: email,

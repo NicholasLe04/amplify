@@ -45,7 +45,7 @@ export default function Post({ post }: Props) {
                     <img className="rounded-full aspect-square" width={32} src={post.author.imgUrl} />
                     <p className="text-white my-auto">{post.author.displayName} is sharing {post.type === 'artist' || post.type === 'album' || post.type === 'episode' ? 'an' : 'a'} {post.type}</p>
                 </div>
-                <p className="text-sm text-gray-400 my-auto">{monthName} {day} at {time}</p>
+                <p className="text-sm text-space-lighter my-auto">{monthName} {day} at {time}</p>
             </div>
             {post.type === 'track' ?
                 < iframe

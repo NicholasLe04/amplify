@@ -76,7 +76,7 @@ export default function App() {
             {authenticated ?
                 <Wrapper queryClient={queryClient} profile={profile} setProfile={setProfile}>
                     {
-                        windowWidth < 768 ?
+                        windowWidth < 800 ?
                             // mobile
                             <div className='w-full h-full flex flex-col'>
                                 <MobileHeader />
@@ -107,7 +107,7 @@ export default function App() {
                 :
                 <>
                     {
-                        windowWidth < 768 ?
+                        windowWidth < 800 ?
                             // mobile
                             <Wrapper queryClient={queryClient} profile={profile} setProfile={setProfile}>
                                 <MobileHeader />

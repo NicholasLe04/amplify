@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,9 +25,8 @@ public class PostController {
 
     @GetMapping
     public List<Post> getRecentPosts(
-        @RequestParam(defaultValue = "0") int page,
-        @RequestParam(defaultValue = "10") int size
-    ) {
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
         return postService.getRecentPosts(page, size);
     }
 
@@ -36,7 +36,8 @@ public class PostController {
     }
 
     @PostMapping
-    public Post createPost(@RequestBody PostDTO postDTO) {
-        return postService.createPost(postDTO.getSpotifyUrl(), postDTO.getType(), postDTO.getDescription(), postDTO.getAuthorEmail());
+    public Post createPost(@RequestBody PostDTO postDTO, @RequestHeader(value = "Authorization") String accessToken) {
+        return postService.createPost(postDTO.getSpotifyUrl(), postDTO.getType(), postDTO.getDescription(),
+                postDTO.getAuthorEmail(), accessToken);
     }
 }

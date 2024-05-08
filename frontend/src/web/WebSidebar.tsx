@@ -39,7 +39,7 @@ export default function WebSidebar() {
                             <img className='' src={nowPlaying.data.item?.album.images[0].url} />
                             <div>
                                 <div className='truncate'>{nowPlaying.data.item?.name}</div>
-                                <div className='truncate text-gray-400'>{nowPlaying.data.item?.artists.map((artist: any) => { return artist.name }).join(', ')}</div>
+                                <div className='truncate text-space-lighter'>{nowPlaying.data.item?.artists.map((artist: any) => { return artist.name }).join(', ')}</div>
                             </div>
                         </div>
                         :

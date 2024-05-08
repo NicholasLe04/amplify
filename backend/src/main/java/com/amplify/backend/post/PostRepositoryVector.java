@@ -70,7 +70,7 @@ public class PostRepositoryVector {
                 .build());
     }
 
-    public void save(String id, List<Float> vector) {
+    public void save(Long id, List<Float> vector) {
         // save post to milvus
         List<JSONObject> data = new ArrayList<>();
         JSONObject post = new JSONObject();

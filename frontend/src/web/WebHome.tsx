@@ -16,7 +16,7 @@ export default function WebHome() {
     return (
         <>
             <div className='flex flex-col items-center p-6 overflow-y-scroll h-full w-full'>
-                <div className='flex flex-col gap-4 w-1/2'>
+                <div className='flex flex-col gap-4 min-w-[500px] w-1/2'>
                     {recentPosts?.map((post: any) => (
                         <Post post={post} />
                     ))}
