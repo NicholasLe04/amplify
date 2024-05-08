@@ -110,18 +110,26 @@ export default function App() {
                         windowWidth < 768 ?
                             // mobile
                             <Wrapper queryClient={queryClient} profile={profile} setProfile={setProfile}>
-                                <MobileHeader />
                                 <Routes>
-                                    <Route path='/' element={<div>home page here</div>} />
+                                    <Route path='/' element={
+                                        <>
+                                            <MobileHeader />
+                                            <div>home page here</div>
+                                        </>
+                                    } />
                                     <Route path='/callback' element={<Callback setAuthenticated={setAuthenticated} />} />
                                 </Routes>
                             </Wrapper>
                             :
                             // web
                             <Wrapper queryClient={queryClient} profile={profile} setProfile={setProfile}>
-                                <WebHeader authenticated={authenticated} setAuthenticated={setAuthenticated} />
                                 <Routes>
-                                    <Route path='/' element={<div>home page here</div>} />
+                                    <Route path='/' element={
+                                        <>
+                                            <WebHeader authenticated={authenticated} setAuthenticated={setAuthenticated} />
+                                            <div>home page here</div>
+                                        </>
+                                    } />
                                     <Route path='/callback' element={<Callback setAuthenticated={setAuthenticated} />} />
                                 </Routes>
                             </Wrapper>
