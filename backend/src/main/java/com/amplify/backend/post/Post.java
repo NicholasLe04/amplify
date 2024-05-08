@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 public class Post {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
 
     @Column(name="spotify_url")
@@ -33,6 +33,8 @@ public class Post {
 
     @ManyToOne
     private User author;
+
+    @Column(name="description", length=1023)
     private String description;
 
     protected Post() {
