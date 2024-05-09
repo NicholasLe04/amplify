@@ -37,7 +37,6 @@ async function refreshToken() {
         const expiresDate = new Date(now.getTime() + data.expires_in * 500)
         localStorage.setItem('expires_at', expiresDate.toISOString())
     }
-    console.log(data)
 }
 
 async function logout() {

@@ -43,43 +43,47 @@ export default function Post({ post }: Props) {
             <div className="flex justify-between">
                 <div className='flex gap-3'>
                     <img className="rounded-full aspect-square" width={32} src={post.author.imgUrl} />
-                    <p className="text-white my-auto">{post.author.displayName} is sharing {post.type === 'artist' || post.type === 'album' || post.type === 'episode' ? 'an' : 'a'} {post.type}</p>
+                    <p className="text-white my-auto">{post.author.displayName} is sharing {post.type === 'artist' || post.type === 'album' || post.type === 'episode' ? 'an' : 'a'} <span className='font-semibold'>{post.type}</span></p>
                 </div>
                 <p className="text-sm text-space-lighter my-auto">{monthName} {day} at {time}</p>
             </div>
-            {post.type === 'track' ?
-                < iframe
-                    width="100%"
-                    height="80px"
-                    title="Spotify Embed"
-                    src={convertToEmbedUrl(post.spotifyUrl)}
-                /> : null
+            {
+                post.type === 'track' ?
+                    < iframe
+                        width="100%"
+                        height="80px"
+                        title="Spotify Embed"
+                        src={convertToEmbedUrl(post.spotifyUrl)}
+                    /> : null
             }
-            {post.type === 'album' ?
-                < iframe
-                    width="100%"
-                    height="420px"
-                    title="Spotify Embed"
-                    src={convertToEmbedUrl(post.spotifyUrl)}
-                /> : null
+            {
+                post.type === 'album' ?
+                    < iframe
+                        width="100%"
+                        height="420px"
+                        title="Spotify Embed"
+                        src={convertToEmbedUrl(post.spotifyUrl)}
+                    /> : null
             }
-            {post.type === 'playlist' ?
-                < iframe
-                    width="100%"
-                    height="420px"
-                    title="Spotify Embed"
-                    src={convertToEmbedUrl(post.spotifyUrl)}
-                /> : null
+            {
+                post.type === 'playlist' ?
+                    < iframe
+                        width="100%"
+                        height="420px"
+                        title="Spotify Embed"
+                        src={convertToEmbedUrl(post.spotifyUrl)}
+                    /> : null
             }
-            {post.type === 'artist' ?
-                < iframe
-                    width="100%"
-                    height="420px"
-                    title="Spotify Embed"
-                    src={convertToEmbedUrl(post.spotifyUrl)}
-                /> : null
+            {
+                post.type === 'artist' ?
+                    < iframe
+                        width="100%"
+                        height="420px"
+                        title="Spotify Embed"
+                        src={convertToEmbedUrl(post.spotifyUrl)}
+                    /> : null
             }
             <p className="text-sm text-white font-thin tracking-wider">{post.description}</p>
-        </div>
+        </div >
     )
 }
