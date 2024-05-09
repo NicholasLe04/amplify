@@ -69,7 +69,7 @@ public class UserService {
                     String.class);
             JsonNode resTrackFeaturesJson = objectMapper.readTree(resTrackFeatures.getBody());
 
-            // get avg track features
+            // get summed track features
             List<Float> avgFeatures = List.of(0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f);
             for (JsonNode song : resTrackFeaturesJson.get("audio_features")) {
                 avgFeatures = List.of(
@@ -84,6 +84,7 @@ public class UserService {
                         avgFeatures.get(8) + song.get("valence").floatValue());
             }
 
+            // get avg of tracks
             avgFeatures = List.of(
                     avgFeatures.get(0) / count,
                     avgFeatures.get(1) / count,
@@ -96,11 +97,12 @@ public class UserService {
                     avgFeatures.get(8) / count);
 
             userRepositoryVector.save(user.getEmail(), avgFeatures);
+            return userRepository.save(user);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        return userRepository.save(user);
+        return null;
     }
 
     public User getUserByEmail(String email) {
