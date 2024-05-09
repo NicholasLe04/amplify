@@ -84,16 +84,16 @@ public class PostRepositoryVector {
                 .build());
     }
 
-    public List<Integer> findByVector(List<Float> vector) {
+    public List<Long> findByVector(List<Float> vector) {
         // search milvus for similar vectors
         SearchResp res = milvusClient.search(SearchReq.builder()
                 .collectionName("posts")
                 .data(Collections.singletonList(vector))
-                .topK(50)
+                .topK(1)
                 .build());
-        ArrayList<Integer> postIds = new ArrayList<>();
+        ArrayList<Long> postIds = new ArrayList<>();
         for (SearchResp.SearchResult post : res.getSearchResults().get(0)) {
-            postIds.add((int) post.getId());
+            postIds.add((long) post.getId());
         }
         return postIds;
     }

@@ -40,4 +40,9 @@ public class PostController {
         return postService.createPost(postDTO.getSpotifyUrl(), postDTO.getType(), postDTO.getDescription(),
                 postDTO.getAuthorEmail(), accessToken);
     }
+
+    @GetMapping("/recommended/{email}")
+    public List<Post> getRecommendedPosts(@PathVariable String email) {
+        return postService.getRecommendedPosts(email);
+    }
 }

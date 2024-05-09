@@ -1,5 +1,6 @@
 package com.amplify.backend.post;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.amplify.backend.user.User;
 import com.amplify.backend.user.UserRepository;
+import com.amplify.backend.user.UserRepositoryVector;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -20,14 +22,17 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class PostService {
 
     private final UserRepository userRepository;
+    private final UserRepositoryVector userRepositoryVector;
     private final PostRepository postRepository;
     private final PostRepositoryVector postRepositoryVector;
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Autowired
-    public PostService(UserRepository userRepository, PostRepository postRepository,
+    public PostService(UserRepository userRepository, UserRepositoryVector userRepositoryVector,
+            PostRepository postRepository,
             PostRepositoryVector postRepositoryVector) {
         this.userRepository = userRepository;
+        this.userRepositoryVector = userRepositoryVector;
         this.postRepository = postRepository;
         this.postRepositoryVector = postRepositoryVector;
     }
@@ -270,5 +275,15 @@ public class PostService {
             }
         }
         return null;
+    }
+
+    public List<Post> getRecommendedPosts(String email) {
+        List<Float> userVector = userRepositoryVector.findByEmail(email);
+        List<Long> postIds = postRepositoryVector.findByVector(userVector);
+        List<Post> posts = new ArrayList<>();
+        for (Long postId : postIds) {
+            posts.add(postRepository.findById(postId).get());
+        }
+        return posts;
     }
 }
