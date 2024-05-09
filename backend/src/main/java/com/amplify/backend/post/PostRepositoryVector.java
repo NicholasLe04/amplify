@@ -89,7 +89,7 @@ public class PostRepositoryVector {
         SearchResp res = milvusClient.search(SearchReq.builder()
                 .collectionName("posts")
                 .data(Collections.singletonList(vector))
-                .topK(1)
+                .topK(10)
                 .build());
         ArrayList<Long> postIds = new ArrayList<>();
         for (SearchResp.SearchResult post : res.getSearchResults().get(0)) {

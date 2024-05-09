@@ -1,5 +1,28 @@
+type Post = {
+    id: number,
+    spotifyUrl: string,
+    postedAt: string,
+    type: string,
+    author: {
+        email: string,
+        country: string,
+        externalUrl: string,
+        imgUrl: string,
+        displayName: string
+    },
+    description: string
+}
+
 async function getRecentPosts(page: number, size: number = 10) {
     const res = await fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/api/v1/posts?page=${page}&size=${size}`, {
+        method: 'GET'
+    })
+    const json = await res.json()
+    return json
+}
+
+async function getRecommendedPosts(email: string): Promise<[Post]> {
+    const res = await fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/api/v1/posts/recommended/${email}`, {
         method: 'GET'
     })
     const json = await res.json()
@@ -32,4 +55,4 @@ async function createPost(email: string, type: string, description: string, spot
     return json
 }
 
-export { getRecentPosts, getUserPosts, createPost }
+export { getRecentPosts, getRecommendedPosts, getUserPosts, createPost }

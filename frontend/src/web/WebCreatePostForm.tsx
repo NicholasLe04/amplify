@@ -65,9 +65,9 @@ export default function WebCreatePostPopup({ setShowCreatePostForm }: Props) {
                     </div>
                 </div>
                 <div className='absolute bottom-8 right-10 flex gap-2'>
-                    <div className='bg-red-500 p-2 w-[85px] text-center rounded-md hover:bg-red-400 transition ease-in-out duration-100' onClick={() => { setShowCreatePostForm(false) }}>Cancel</div>
+                    <div className='bg-red-500 p-2 w-[85px] text-center rounded-md hover:bg-red-400 transition ease-in-out duration-200' onClick={() => { setShowCreatePostForm(false) }}>Cancel</div>
                     <div
-                        className='bg-green-600 p-2 w-[85px] text-center rounded-md hover:bg-green-500 transition ease-in-out duration-100'
+                        className='bg-green-500 p-2 w-[85px] text-center rounded-md hover:bg-green-400 transition ease-in-out duration-200'
                         onClick={() => { setShowCreatePostForm(false); onFormSubmit(localStorage.getItem('email') || '', caption, spotifyLink) }}
                     >
                         Confirm

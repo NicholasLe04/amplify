@@ -6,7 +6,10 @@ export default {
             colors: {
                 'space': '#242b3d',
                 'space-light': '#2e3a53',
-                'space-lighter': '#6d7f9e'
+                'space-lighter': '#4a556f',
+                'space-lighter-hover': '#4f5a74',
+                'space-lightest': '#6d7f9e',
+
             },
             fontFamily: {
                 'sans': ['Poppins', 'sans-serif'],

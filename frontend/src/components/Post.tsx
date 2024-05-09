@@ -39,14 +39,15 @@ export default function Post({ post }: Props) {
     const time = `${hours % 12 || 12}:${minutes < 10 ? '0' : ''}${minutes} ${hours < 12 ? 'AM' : 'PM'}`;
 
     return (
-        <div key={post.id} className="bg-space-light rounded-xl p-6 flex flex-col gap-3">
+        <div key={post.id} className="bg-space-light rounded-xl p-6 flex flex-col gap-4">
             <div className="flex justify-between">
                 <div className='flex gap-3'>
                     <img className="rounded-full aspect-square" width={32} src={post.author.imgUrl} />
                     <p className="text-white my-auto">{post.author.displayName} is sharing {post.type === 'artist' || post.type === 'album' || post.type === 'episode' ? 'an' : 'a'} <span className='font-semibold'>{post.type}</span></p>
                 </div>
-                <p className="text-sm text-space-lighter my-auto">{monthName} {day} at {time}</p>
+                <p className="text-sm text-space-lightest my-auto">{monthName} {day} at {time}</p>
             </div>
+            <hr className='border-space-lightest' />
             {
                 post.type === 'track' ?
                     < iframe
@@ -83,7 +84,11 @@ export default function Post({ post }: Props) {
                         src={convertToEmbedUrl(post.spotifyUrl)}
                     /> : null
             }
-            <p className="text-sm text-white font-thin tracking-wider">{post.description}</p>
+            {post.description === '' ? null :
+                <>
+                    <p className="text-sm text-white font-thin tracking-wider">{post.description}</p>
+                </>
+            }
         </div >
     )
 }
