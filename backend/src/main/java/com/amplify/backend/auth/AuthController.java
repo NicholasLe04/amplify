@@ -100,7 +100,7 @@ public class AuthController {
     }
 
     @GetMapping("/refresh")
-    private JsonNode refreshToken(String code) throws Exception {
+    private JsonNode refreshToken(@RequestParam String code) throws Exception {
         HttpHeaders authUrlHeaders = new HttpHeaders();
         authUrlHeaders.add("content-type", "application/x-www-form-urlencoded");
 
@@ -108,10 +108,15 @@ public class AuthController {
                 .queryParam("grant_type", "refresh_token")
                 .queryParam("refresh_token", code)
                 .queryParam("client_id", clientId)
+                .queryParam("client_secret", clientSecret)
                 .build()
                 .toString();
 
-        ResponseEntity<String> response = new RestTemplate().postForEntity(authUrl, null, String.class, authUrlHeaders);
+        ResponseEntity<String> response = new RestTemplate().postForEntity(
+                authUrl,
+                null,
+                String.class,
+                authUrlHeaders);
 
         return objectMapper.readTree(response.getBody());
     }

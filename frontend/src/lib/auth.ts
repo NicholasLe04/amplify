@@ -1,13 +1,3 @@
-import { getUserDetails } from './user'
-
-type Profile = {
-    email: string,
-    country: string,
-    externalUrl: string,
-    imgUrl: string,
-    displayName: string
-}
-
 async function login() {
     const res = await fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/api/v1/auth/authorize`, {
         method: 'GET'
@@ -28,25 +18,26 @@ async function loginCallback(code: string) {
         localStorage.setItem('access_token', data.access_token)
         localStorage.setItem('refresh_token', data.refresh_token)
         localStorage.setItem('email', data.email)
-        let date = new Date()
-        date.setSeconds(date.getSeconds() + data.expires_in)
-        localStorage.setItem('expires_at', date.toISOString())
+        const now = new Date()
+        // set expire to half the time
+        const expiresDate = new Date(now.getTime() + data.expires_in * 500)
+        localStorage.setItem('expires_at', expiresDate.toISOString())
     }
 }
 
 async function refreshToken() {
-    console.log('refresh')
     const res = await fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/api/v1/auth/refresh?code=${localStorage.getItem('refresh_token')}`, {
         method: 'GET'
     })
     const data = await res.json()
     if (data.access_token) {
         localStorage.setItem('access_token', data.access_token)
-        localStorage.setItem('refresh_token', data.refresh_token)
-        let date = new Date()
-        date.setTime(date.getSeconds() + data.expires_in)
-        localStorage.setItem('expires_at', date.toISOString())
+        const now = new Date()
+        // set expire to half the time
+        const expiresDate = new Date(now.getTime() + data.expires_in * 500)
+        localStorage.setItem('expires_at', expiresDate.toISOString())
     }
+    console.log(data)
 }
 
 async function logout() {

@@ -35,25 +35,21 @@ export default function App() {
 
     // check logged in
     useEffect(() => {
-        const checkExpiration = () => {
+        function checkExpiration() {
             const expiresAt = localStorage.getItem('expires_at')
             if (expiresAt) {
                 if (new Date() > new Date(expiresAt)) { // if expired initiate refresh
                     refreshToken()
-                    setAuthenticated(true)
-                } else {
-                    setAuthenticated(true)
                 }
+                setAuthenticated(true)
                 getUserDetails().then((data) => {
                     setProfile(data)
                 })
-            } else { // if doesnt exist, make them login
-                setAuthenticated(false)
             }
         }
 
         checkExpiration()
-        const interval = setInterval(checkExpiration, 60000) // Check every minute
+        const interval = setInterval(checkExpiration, 5 * 60 * 1000) // Check every 5 minutes
 
         return () => clearInterval(interval)
     }, [])
