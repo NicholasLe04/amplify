@@ -282,7 +282,9 @@ public class PostService {
         List<Long> postIds = postRepositoryVector.findByVector(userVector);
         List<Post> posts = new ArrayList<>();
         for (Long postId : postIds) {
-            posts.add(postRepository.findById(postId).get());
+            if (postRepository.findById(postId).isPresent()) {
+                posts.add(postRepository.findById(postId).get());
+            }
         }
         return posts;
     }

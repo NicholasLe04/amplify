@@ -22,6 +22,7 @@ async function getRecentPosts(page: number, size: number = 10) {
 }
 
 async function getRecommendedPosts(email: string): Promise<[Post]> {
+    console.log('refeching recommended posts')
     const res = await fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/api/v1/posts/recommended/${email}`, {
         method: 'GET'
     })

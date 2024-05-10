@@ -4,8 +4,8 @@ import { ProfileContext } from '../lib/context'
 import { getUserDetails } from '../lib/user'
 
 type Props = {
-    authenticated: boolean,
-    setAuthenticated: React.Dispatch<React.SetStateAction<boolean>>
+    authenticated: boolean | null,
+    setAuthenticated: React.Dispatch<React.SetStateAction<boolean | null>>
 }
 
 export default function WebHeader({ authenticated, setAuthenticated }: Props) {
@@ -15,18 +15,15 @@ export default function WebHeader({ authenticated, setAuthenticated }: Props) {
 
     useEffect(() => {
         if (authenticated) {
-            // idk i put a setTimeout so there isnt race with localStorage
-            setTimeout(() => {
-                getUserDetails().then((data) => {
-                    profileContext?.setProfile(data)
-                })
-            }, 500)
+            getUserDetails().then((data) => {
+                profileContext?.setProfile(data)
+            })
         }
     }, [])
 
     return (
         <>
-            <div className='w-full h-14 border-b-4 border-space-light px-5 py-3 flex justify-between'>
+            <div className='w-full h-14 border-b-2 border-space-lighter px-5 py-3 flex justify-between select-none'>
                 <div className='text-lg'>Amplify</div>
                 {
                     authenticated ?

@@ -1,11 +1,9 @@
-import { useEffect, useState } from "react"
 import { getRecommendedPosts } from "../lib/post"
 import Post from "../components/Post"
 import { useQuery } from '@tanstack/react-query'
 import WebLoading from './WebLoading'
 
 export default function WebHome() {
-
 
     const posts = useQuery({
         queryKey: ['posts'],
@@ -22,13 +20,19 @@ export default function WebHome() {
                         <>
                             <WebLoading />
                         </> : null}
-                    {posts.isError ? <div></div> : null}
+                    {posts.isError ? <div>Error fetching :(</div> : null}
                     {posts.isSuccess ?
-                        <>
-                            {posts?.data.map((post: any) => (
-                                <Post post={post} />
-                            ))}
-                        </> : null
+                        posts.data.length ?
+                            <>
+                                {posts.data.map((post: any) => (
+                                    <Post post={post} />
+                                ))}
+                            </>
+                            :
+                            <>
+                                <div className='mx-auto'>No posts yet :(</div>
+                            </>
+                        : null
                     }
                 </div>
             </div>

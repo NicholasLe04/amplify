@@ -4,7 +4,7 @@ import { useContext, useEffect } from 'react'
 import { ProfileContext } from '../lib/context'
 
 type Props = {
-    setAuthenticated: React.Dispatch<React.SetStateAction<boolean>>
+    setAuthenticated: React.Dispatch<React.SetStateAction<boolean | null>>
 }
 
 export default function Callback({ setAuthenticated }: Props) {

@@ -8,6 +8,10 @@ async function getNowPlaying() {
             }
         }
     )
+    // no content
+    if (res.status === 204) {
+        return null;
+    }
     const data = await res.json()
     return data
 }

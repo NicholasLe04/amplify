@@ -18,7 +18,7 @@ export default function WebSidebar() {
     return (
         <>
             {showCreatePostForm ? <WebCreatePostPopup setShowCreatePostForm={setShowCreatePostForm} /> : null}
-            <div className='w-60 h-full px-5 py-10 flex flex-col justify-between border-r-4 border-space-light'>
+            <div className='w-60 h-full px-5 py-10 flex flex-col justify-between border-r-2 border-space-lighter select-none'>
                 <div className='flex flex-col gap-3'>
                     <Link className='flex p-5 gap-5 bg-space-light rounded-xl hover:bg-space-lighter-hover transition ease-in-out' to='/'>
                         <GrHomeRounded className='my-auto' />
@@ -34,9 +34,13 @@ export default function WebSidebar() {
                     </div>
                 </div>
                 <div className='flex flex-col gap-3'>
-                    {nowPlaying.isSuccess ?
+
+                    {nowPlaying.isSuccess && nowPlaying.data !== null ?
                         <div className='flex flex-col gap-3'>
                             <img className='' src={nowPlaying.data.item?.album.images[0].url} />
+                            <div className='bg-space-light overflow-hidden'>
+                                <div style={{ width: `${(nowPlaying.data.progress_ms / nowPlaying.data.item?.duration_ms * 100).toFixed(1)}%` }} className={'bg-space-lightest h-1'}></div>
+                            </div>
                             <div>
                                 <div className='truncate'>{nowPlaying.data.item?.name}</div>
                                 <div className='truncate text-space-lightest'>{nowPlaying.data.item?.artists.map((artist: any) => { return artist.name }).join(', ')}</div>
@@ -44,8 +48,11 @@ export default function WebSidebar() {
                         </div>
                         :
                         <div className='flex flex-col gap-3'>
-                            <div className='bg-space-light rounded-xl h-48'></div>
-                            <div className='bg-space-light rounded-xl h-12'></div>
+                            <div className='bg-space-light rounded-xl h-12 flex justify-center'>
+                                <div className='my-auto text-space-lightest'>
+                                    Put something on!
+                                </div>
+                            </div>
                         </div>
                     }
                     <Link className='flex p-5 gap-5 bg-space-light rounded-xl hover:bg-space-lighter-hover transition ease-in-out' to='/profile'>

@@ -1,7 +1,7 @@
 import { QueryClient } from '@tanstack/react-query'
 import lodash from 'lodash'
 import { useEffect, useState } from 'react'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
 import Callback from './common/Callback'
 import Wrapper from './common/Wrapper'
 import { refreshToken } from './lib/auth'
@@ -13,12 +13,12 @@ import WebHeader from './web/WebHeader'
 import WebHome from './web/WebHome'
 import WebProfile from './web/WebProfile'
 import WebSidebar from './web/WebSidebar'
-import { getUserDetails } from './lib/user'
+
+const queryClient = new QueryClient()
 
 export default function App() {
 
-    const queryClient = new QueryClient()
-    const [authenticated, setAuthenticated] = useState(false)
+    const [authenticated, setAuthenticated] = useState<boolean | null>(null)
     const [profile, setProfile] = useState({
         email: '',
         country: '',
@@ -41,10 +41,12 @@ export default function App() {
                 if (new Date() > new Date(expiresAt)) { // if expired initiate refresh
                     refreshToken()
                 }
-                setAuthenticated(true)
-                getUserDetails().then((data) => {
-                    setProfile(data)
-                })
+                // idk i put a setTimeout so there isnt race condition with localStorage
+                setTimeout(() => {
+                    setAuthenticated(true)
+                }, 500)
+            } else {
+                setAuthenticated(false)
             }
         }
 
@@ -67,9 +69,13 @@ export default function App() {
         }
     }, [])
 
+    useEffect(() => {
+
+    })
+
     return (
         <>
-            {authenticated ?
+            {authenticated === true ? // need to do this bc null is falsey value
                 <Wrapper queryClient={queryClient} profile={profile} setProfile={setProfile}>
                     {
                         windowWidth < 800 ?
@@ -86,6 +92,7 @@ export default function App() {
                                 <MobileFooter />
                             </div>
                             :
+
                             // web
                             <div className='h-full w-full flex'>
                                 <WebSidebar />
@@ -100,7 +107,9 @@ export default function App() {
                             </div>
                     }
                 </Wrapper>
-                :
+                : null
+            }
+            {authenticated === false ? // need to do this bc null is falsey value
                 <>
                     {
                         windowWidth < 800 ?
@@ -130,7 +139,7 @@ export default function App() {
                                 </Routes>
                             </Wrapper>
                     }
-                </>
+                </> : null
             }
         </>
     )

@@ -11,6 +11,7 @@
     },
     "dependencies": {
         "@tanstack/react-query": "^5.32.0",
+        "@tanstack/react-query-devtools": "^5.35.1",
         "autoprefixer": "^10.4.19",
         "axios": "^1.6.8",
         "lodash": "^4.17.21",

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { createPost } from '../lib/post'
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 type Props = {
     setShowCreatePostForm: React.Dispatch<React.SetStateAction<boolean>>
@@ -7,12 +8,27 @@ type Props = {
 
 export default function WebCreatePostPopup({ setShowCreatePostForm }: Props) {
 
+    const queryClient = useQueryClient()
+
     const [spotifyLink, setSpotifyLink] = useState('');
     const [caption, setCaption] = useState('');
 
     function getPostType(spotifyUrl: string): string {
         return spotifyUrl.split('/')[3];
     }
+
+    const createPostMutation = useMutation({
+        mutationKey: ['posts'],
+        mutationFn: (params: { email: string, type: string, description: string, spotifyUrl: string }) => {
+            const { email, type, description, spotifyUrl } = params;
+            return createPost(email, type, description, spotifyUrl);
+        },
+        onSuccess: () => {
+            setTimeout(() => {
+                queryClient.invalidateQueries({ queryKey: ['posts'] })
+            }, 1000)
+        }
+    })
 
     function onFormSubmit(email: string, description: string, spotifyUrl: string) {
         if (email === null || spotifyUrl === '') {
@@ -28,7 +44,12 @@ export default function WebCreatePostPopup({ setShowCreatePostForm }: Props) {
                 method: 'GET',
             }).then(response => {
                 if (response.ok) {
-                    createPost(email, getPostType(spotifyUrl), description, spotifyUrl)
+                    createPostMutation.mutate({
+                        email: email,
+                        type: getPostType(spotifyUrl),
+                        description: description,
+                        spotifyUrl: spotifyUrl
+                    })
                     setShowCreatePostForm(false);
                 }
                 else {
@@ -51,7 +72,7 @@ export default function WebCreatePostPopup({ setShowCreatePostForm }: Props) {
 
     return (
         <div className='fixed w-screen h-screen bottom-0 right-0 z-10 flex justify-center items-center'>
-            <div className='w-full h-full absolute bg-black opacity-40' onClick={() => { setShowCreatePostForm(false) }}></div>
+            <div className='w-full h-full absolute bg-black opacity-50' onClick={() => { setShowCreatePostForm(false) }}></div>
             <div className='max-w-[700px] max-h-[500px] w-1/2 h-1/2 z-20 px-10 py-10 bg-space rounded-2xl shadow-xl flex flex-col relative overflow-hidden'>
                 <div className='flex flex-col gap-4'>
                     <div className='text-2xl font-semibold'>Create a post</div>
