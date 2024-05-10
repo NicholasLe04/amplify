@@ -37,6 +37,14 @@ public class PostService {
         this.postRepositoryVector = postRepositoryVector;
     }
 
+    public List<Post> getPostsByAuthorId(String authorId) {
+        User author = userRepository.findById(authorId)
+                .orElseThrow(() -> new IllegalStateException("User " + authorId + " not found"));
+
+        return postRepository.findByAuthor(author)
+                .orElseThrow(() -> new IllegalStateException("Posts by user " + author.getId() + " not found"));
+    }
+
     public List<Post> getPostsByAuthorEmail(String authorEmail) {
         User author = userRepository.findByEmail(authorEmail)
                 .orElseThrow(() -> new IllegalStateException("User " + authorEmail + " not found"));
@@ -49,14 +57,13 @@ public class PostService {
         return postRepository.findAllByOrderByPostedAtDesc(PageRequest.of(page, size)).getContent();
     }
 
-    public Post createPost(String spotifyUrl, PostType type, String description, String authorEmail,
-            String accessToken) {
+    public Post createPost(String spotifyUrl, PostType type, String description, String authorId, String accessToken) {
         HttpHeaders headers = new HttpHeaders();
         headers.add("Authorization", accessToken);
         HttpEntity<String> reqEntity = new HttpEntity<>(headers);
 
-        User author = userRepository.findByEmail(authorEmail)
-                .orElseThrow(() -> new IllegalStateException("User " + authorEmail + " not found"));
+        User author = userRepository.findById(authorId)
+                .orElseThrow(() -> new IllegalStateException("User " + authorId + " not found"));
         List<Float> avgFeatures = List.of(0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f);
 
         if (type == PostType.track) {
@@ -277,7 +284,10 @@ public class PostService {
         return null;
     }
 
-    public List<Post> getRecommendedPosts(String email) {
+    public List<Post> getRecommendedPosts(String id) {
+        String email = userRepository.findById(id)
+            .orElseThrow(() -> new IllegalStateException("User with id " + id + " not found"))
+            .getEmail();
         List<Float> userVector = userRepositoryVector.findByEmail(email);
         List<Long> postIds = postRepositoryVector.findByVector(userVector);
         List<Post> posts = new ArrayList<>();

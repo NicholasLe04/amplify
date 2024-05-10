@@ -30,19 +30,24 @@ public class PostController {
         return postService.getRecentPosts(page, size);
     }
 
-    @GetMapping("/{email}")
-    public List<Post> getPostsByAuthorEmail(@PathVariable String email) {
-        return postService.getPostsByAuthorEmail(email);
+    @GetMapping("/{id}")
+    public List<Post> getPostsByAuthorId(@PathVariable String id) {
+        return postService.getPostsByAuthorId(id);
     }
 
     @PostMapping
     public Post createPost(@RequestBody PostDTO postDTO, @RequestHeader(value = "Authorization") String accessToken) {
-        return postService.createPost(postDTO.getSpotifyUrl(), postDTO.getType(), postDTO.getDescription(),
-                postDTO.getAuthorEmail(), accessToken);
+        return postService.createPost(
+            postDTO.getSpotifyUrl(), 
+            postDTO.getType(), 
+            postDTO.getDescription(),
+            postDTO.getAuthorId(), 
+            accessToken
+        );
     }
 
-    @GetMapping("/recommended/{email}")
-    public List<Post> getRecommendedPosts(@PathVariable String email) {
-        return postService.getRecommendedPosts(email);
+    @GetMapping("/recommended/{id}")
+    public List<Post> getRecommendedPosts(@PathVariable String id) {
+        return postService.getRecommendedPosts(id);
     }
 }

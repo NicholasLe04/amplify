@@ -105,12 +105,20 @@ public class UserService {
         return null;
     }
 
+    public User getUserById(String id) {
+        return userRepository.findById(id)
+                .orElseThrow(() -> new IllegalStateException("User with id " + id + " not found"));
+    }
+
     public User getUserByEmail(String email) {
         return userRepository.findByEmail(email)
                 .orElseThrow(() -> new IllegalStateException("User with email " + email + " not found"));
     }
 
-    public List<User> getRecommendedUsers(String email) {
+    public List<User> getRecommendedUsers(String id) {
+        String email = userRepository.findById(id)
+                .orElseThrow(() -> new IllegalStateException("User with id " + id + " not found"))
+                .getEmail();
         List<Float> userVector = userRepositoryVector.findByEmail(email);
         List<String> emails = userRepositoryVector.findByVector(userVector);
         List<User> users = new ArrayList<>();

@@ -4,7 +4,7 @@ public class PostDTO {
     private String spotifyUrl;
     private PostType type;
     private String description;
-    private String authorEmail;
+    private String authorId;
 
     public String getSpotifyUrl() {
         return spotifyUrl;
@@ -18,7 +18,7 @@ public class PostDTO {
         return description;
     }
 
-    public String getAuthorEmail() {
-        return authorEmail;
+    public String getAuthorId() {
+        return authorId;
     }
 }

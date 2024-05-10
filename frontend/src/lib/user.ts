@@ -17,17 +17,17 @@ async function getNowPlaying() {
 }
 
 // get user details
-async function getUserDetails(email = localStorage.getItem('email')) {
-    if (!email) {
+async function getUserDetails(id = localStorage.getItem('user_id')) {
+    if (!id) {
         return {
+            id: '',
             email: '',
             country: '',
-            externalUrl: '',
             imgUrl: '',
             displayName: ''
         }
     }
-    const res = await fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/api/v1/users/${email}`, {
+    const res = await fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/api/v1/users/${id}`, {
         method: 'GET'
     })
     const json = await res.json()

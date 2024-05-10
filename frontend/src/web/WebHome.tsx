@@ -8,7 +8,7 @@ export default function WebHome() {
     const posts = useQuery({
         queryKey: ['posts'],
         queryFn: async () => {
-            return getRecommendedPosts(localStorage.getItem('email') || '')
+            return getRecommendedPosts(localStorage.getItem('user_id') || '')
         },
     })
 

@@ -19,14 +19,14 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/{email}")
-    public User getUserByEmail(@PathVariable String email) {
-        return userService.getUserByEmail(email);
+    @GetMapping("/{id}")
+    public User getUserById(@PathVariable String id) {
+        return userService.getUserById(id);
     }
 
-    @GetMapping("/recommended/{email}")
-    public List<User> getRecommendedUsers(@PathVariable String email) {
-        return userService.getRecommendedUsers(email);
+    @GetMapping("/recommended/{id}")
+    public List<User> getRecommendedUsers(@PathVariable String id) {
+        return userService.getRecommendedUsers(id);
     }
 
 }

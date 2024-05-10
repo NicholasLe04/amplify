@@ -20,9 +20,9 @@ export default function WebCreatePostPopup({ spotifyLink, setSpotifyLink, captio
 
     const createPostMutation = useMutation({
         mutationKey: ['posts'],
-        mutationFn: (params: { email: string, type: string, description: string, spotifyUrl: string }) => {
-            const { email, type, description, spotifyUrl } = params;
-            return createPost(email, type, description, spotifyUrl);
+        mutationFn: (params: { authorId: string, type: string, description: string, spotifyUrl: string }) => {
+            const { authorId, type, description, spotifyUrl } = params;
+            return createPost(authorId, type, description, spotifyUrl);
         },
         onSuccess: () => {
             setTimeout(() => {
@@ -31,8 +31,8 @@ export default function WebCreatePostPopup({ spotifyLink, setSpotifyLink, captio
         }
     })
 
-    function onFormSubmit(email: string, description: string, spotifyUrl: string) {
-        if (email === null || spotifyUrl === '') {
+    function onFormSubmit(authorId: string, description: string, spotifyUrl: string) {
+        if (authorId === null || spotifyUrl === '') {
             alert('Please fill in all fields');
             return;
         }
@@ -46,7 +46,7 @@ export default function WebCreatePostPopup({ spotifyLink, setSpotifyLink, captio
             }).then(response => {
                 if (response.ok) {
                     createPostMutation.mutate({
-                        email: email,
+                        authorId: authorId,
                         type: getPostType(spotifyUrl),
                         description: description,
                         spotifyUrl: spotifyUrl
@@ -98,7 +98,7 @@ export default function WebCreatePostPopup({ spotifyLink, setSpotifyLink, captio
                     </button>
                     <button
                         className='bg-green-600 p-2 w-[85px] text-center rounded-md hover:bg-green-500 transition ease-in-out duration-200 shadow-md'
-                        onClick={() => { setShowCreatePostForm(false); setSpotifyLink(''); setCaption(''); onFormSubmit(localStorage.getItem('email') || '', caption, spotifyLink) }}
+                        onClick={() => { setShowCreatePostForm(false); setSpotifyLink(''); setCaption(''); onFormSubmit(localStorage.getItem('user_id') || '', caption, spotifyLink) }}
                     >
                         Confirm
                     </button>

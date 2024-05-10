@@ -73,25 +73,26 @@ public class AuthController {
         }
 
         // Get and parse user profile data
-        String country = "", displayName = "", email = "", externalUrl = "", imgUrl = "";
+        String id = "", country = "", displayName = "", email = "", imgUrl = "";
         try {
             JsonNode profileRoot = getUserProfile(accessToken);
+            id = profileRoot.get("id").asText();
+            country = profileRoot.get("country").asText();
             country = profileRoot.get("country").asText();
             displayName = profileRoot.get("display_name").asText();
             email = profileRoot.get("email").asText();
-            externalUrl = profileRoot.get("external_urls").get("spotify").asText();
             imgUrl = profileRoot.get("images").get(0).get("url").asText();
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         // Save / update user data to database
-        User user = new User(email, displayName, externalUrl, imgUrl, country);
+        User user = new User(id, email, displayName, imgUrl, country);
         userService.saveUser(user, accessToken);
 
         // Return the user's access and refresh token
         ObjectNode tokenObject = objectMapper.createObjectNode();
-        tokenObject.put("email", email);
+        tokenObject.put("user_id", id);
         tokenObject.put("access_token", accessToken);
         tokenObject.put("refresh_token", refreshToken);
         tokenObject.put("expires_in", expiresIn);

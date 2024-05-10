@@ -4,9 +4,9 @@ type Post = {
     postedAt: string,
     type: string,
     author: {
+        id: string,
         email: string,
         country: string,
-        externalUrl: string,
         imgUrl: string,
         displayName: string
     },
@@ -21,23 +21,23 @@ async function getRecentPosts(page: number, size: number = 10) {
     return json
 }
 
-async function getRecommendedPosts(email: string): Promise<[Post]> {
-    const res = await fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/api/v1/posts/recommended/${email}`, {
+async function getRecommendedPosts(id: string): Promise<[Post]> {
+    const res = await fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/api/v1/posts/recommended/${id}`, {
         method: 'GET'
     })
     const json = await res.json()
     return json
 }
 
-async function getUserPosts(email: string) {
-    const res = await fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/api/v1/posts/${email}`, {
+async function getUserPosts(id: string) {
+    const res = await fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/api/v1/posts/${id}`, {
         method: 'GET'
     })
     const json = await res.json()
     return json
 }
 
-async function createPost(email: string, type: string, description: string, spotifyUrl: string) {
+async function createPost(authorId: string, type: string, description: string, spotifyUrl: string) {
     const res = await fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/api/v1/posts`, {
         method: 'POST',
         headers: {
@@ -45,7 +45,7 @@ async function createPost(email: string, type: string, description: string, spot
             'Authorization': `Bearer ${localStorage.getItem('access_token')}`
         },
         body: JSON.stringify({
-            authorEmail: email,
+            authorId: authorId,
             type: type,
             description: description,
             spotifyUrl: spotifyUrl

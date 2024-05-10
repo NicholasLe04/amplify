@@ -10,23 +10,26 @@ import jakarta.persistence.Table;
 public class User {
 
     @Id
+    private String id;
     private String email;
     private String display_name;
     private String country;
-    @Column(name = "external_url")
-    private String externalUrl;
     @Column(name = "img_url")
     private String imgUrl;
 
     protected User() {
     }
 
-    public User(String email, String display_name, String externalUrl, String imgUrl, String country) {
+    public User(String id, String email, String display_name, String imgUrl, String country) {
+        this.id = id;
         this.email = email;
         this.display_name = display_name;
-        this.externalUrl = externalUrl;
         this.imgUrl = imgUrl;
         this.country = country;
+    }
+
+    public String getId() {
+        return id;
     }
 
     public String getEmail() {
@@ -37,10 +40,6 @@ public class User {
         return display_name;
     }
 
-    public String getExternalUrl() {
-        return externalUrl;
-    }
-
     public String getImgUrl() {
         return imgUrl;
     }
@@ -49,16 +48,16 @@ public class User {
         return country;
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public void setEmail(String email) {
         this.email = email;
     }
 
     public void setDisplayName(String display_name) {
         this.display_name = display_name;
-    }
-
-    public void setExternalUrl(String externalUrl) {
-        this.externalUrl = externalUrl;
     }
 
     public void setImgUrl(String imgUrl) {
@@ -71,9 +70,9 @@ public class User {
 
     @Override
     public String toString() {
-        return "User [email=" + email +
+        return "User [id=" + id +
+                ", email=" + email +
                 ", display_name=" + display_name +
-                ", externalUrl=" + externalUrl +
                 ", imgUrl=" + imgUrl +
                 ", country=" + country + "]";
     }

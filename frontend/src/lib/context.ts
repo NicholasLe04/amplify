@@ -1,9 +1,9 @@
 import { createContext } from 'react'
 
 type Profile = {
+    id: string,
     email: string,
     country: string,
-    externalUrl: string,
     imgUrl: string,
     displayName: string
 }

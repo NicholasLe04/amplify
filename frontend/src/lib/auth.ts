@@ -17,7 +17,7 @@ async function loginCallback(code: string) {
     if (data.access_token) {
         localStorage.setItem('access_token', data.access_token)
         localStorage.setItem('refresh_token', data.refresh_token)
-        localStorage.setItem('email', data.email)
+        localStorage.setItem('user_id', data.user_id)
         const now = new Date()
         // set expire to half the time
         const expiresDate = new Date(now.getTime() + data.expires_in * 500)
@@ -43,7 +43,7 @@ async function logout() {
     localStorage.removeItem('access_token')
     localStorage.removeItem('refresh_token')
     localStorage.removeItem('expires_at')
-    localStorage.removeItem('email')
+    localStorage.removeItem('user_id')
 }
 
 export { login, loginCallback, refreshToken, logout }
