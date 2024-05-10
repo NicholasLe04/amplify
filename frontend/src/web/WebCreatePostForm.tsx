@@ -24,9 +24,7 @@ export default function WebCreatePostPopup({ setShowCreatePostForm }: Props) {
             return createPost(email, type, description, spotifyUrl);
         },
         onSuccess: () => {
-            setTimeout(() => {
-                queryClient.invalidateQueries({ queryKey: ['posts'] })
-            }, 1000)
+            queryClient.invalidateQueries({ queryKey: ['posts'] })
         }
     })
 

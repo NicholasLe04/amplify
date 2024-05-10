@@ -25,7 +25,7 @@ export default function WebHome() {
                         posts.data.length ?
                             <>
                                 {posts.data.map((post: any) => (
-                                    <Post post={post} />
+                                    <Post key={post.id} post={post} />
                                 ))}
                             </>
                             :
