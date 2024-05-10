@@ -92,7 +92,6 @@ public class PostRepositoryVector {
                 .topK(10)
                 .build());
         ArrayList<Long> postIds = new ArrayList<>();
-        System.out.println(postIds);
         for (SearchResp.SearchResult post : res.getSearchResults().get(0)) {
             postIds.add((long) post.getId());
         }

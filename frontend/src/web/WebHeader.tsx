@@ -28,7 +28,7 @@ export default function WebHeader({ authenticated, setAuthenticated }: Props) {
                 {
                     authenticated ?
                         logoutMenu ?
-                            <div className='text-lg px-2 bg-space-light rounded-lg' onClick={() => { logout(); setAuthenticated(false) }}>logout</div>
+                            <div className='text-lg px-2 bg-space-light rounded-lg transition ease-in-out hover:bg-space-lighter' onClick={() => { logout(); setAuthenticated(false) }}>logout</div>
                             :
                             <div className='flex gap-2' onClick={() => { setLogoutMenu(!logoutMenu); setTimeout(() => { setLogoutMenu(false) }, 3000) }}>
                                 {profileContext?.profile.imgUrl ?
@@ -42,7 +42,7 @@ export default function WebHeader({ authenticated, setAuthenticated }: Props) {
                             </div>
 
                         :
-                        <div className='text-lg px-2 bg-space-light rounded-lg' onClick={login}>login</div>
+                        <div className='text-lg px-2 bg-space-light rounded-lg transition ease-in-out hover:bg-space-lighter' onClick={login}>login</div>
                 }
             </div>
         </>
