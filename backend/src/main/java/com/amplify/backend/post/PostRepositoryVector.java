@@ -15,6 +15,7 @@ import io.milvus.v2.common.IndexParam;
 import io.milvus.v2.service.collection.request.AddFieldReq;
 import io.milvus.v2.service.collection.request.CreateCollectionReq;
 import io.milvus.v2.service.collection.request.HasCollectionReq;
+import io.milvus.v2.service.collection.request.LoadCollectionReq;
 import io.milvus.v2.service.index.request.CreateIndexReq;
 import io.milvus.v2.service.vector.request.GetReq;
 import io.milvus.v2.service.vector.request.InsertReq;
@@ -34,8 +35,8 @@ public class PostRepositoryVector {
                 .collectionName("posts")
                 .build())) {
             createPostCollection();
+            createIndex();
         }
-        createIndex();
     }
 
     public void createPostCollection() {

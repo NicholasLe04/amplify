@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { createPost } from '../lib/post'
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { set } from 'lodash';
 
 type Props = {
     spotifyLink: string,
@@ -25,7 +26,9 @@ export default function WebCreatePostPopup({ spotifyLink, setSpotifyLink, captio
             return createPost(email, type, description, spotifyUrl);
         },
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['posts'] })
+            setTimeout(() => {
+                queryClient.invalidateQueries({ queryKey: ['posts'] })
+            }, 250)
         }
     })
 
@@ -50,6 +53,8 @@ export default function WebCreatePostPopup({ spotifyLink, setSpotifyLink, captio
                         spotifyUrl: spotifyUrl
                     })
                     setShowCreatePostForm(false);
+                    setSpotifyLink('')
+                    setCaption('')
                 }
                 else {
                     alert('Please enter a valid Spotify link');
@@ -63,7 +68,9 @@ export default function WebCreatePostPopup({ spotifyLink, setSpotifyLink, captio
     useEffect(() => {
         addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
-                setShowCreatePostForm(false);
+                setShowCreatePostForm(false)
+                setSpotifyLink('')
+                setCaption('')
             }
         })
         return () => { removeEventListener('keydown', () => { }) }
@@ -71,7 +78,7 @@ export default function WebCreatePostPopup({ spotifyLink, setSpotifyLink, captio
 
     return (
         <div className='fixed w-screen h-screen bottom-0 right-0 z-10 flex justify-center items-center select-none'>
-            <div className='w-full h-full absolute bg-black opacity-50' onClick={() => { setShowCreatePostForm(false) }}></div>
+            <div className='w-full h-full absolute bg-black opacity-50' onClick={() => { setShowCreatePostForm(false); setSpotifyLink(''); setCaption('') }}></div>
             <div className='max-w-[700px] max-h-[550px] w-1/2 h-1/2 z-20 px-10 py-10 bg-space rounded-2xl shadow-2xl flex flex-col relative overflow-hidden'>
                 <div className='flex flex-col gap-4'>
                     <div className='text-2xl font-semibold'>Create a post</div>
@@ -86,13 +93,13 @@ export default function WebCreatePostPopup({ spotifyLink, setSpotifyLink, captio
                 </div>
                 <div className='absolute bottom-8 right-10 flex gap-2'>
                     <button className='bg-space-light p-2 w-[85px] text-center rounded-md hover:bg-space-lighter transition ease-in-out duration-200 shadow-md'
-                        onClick={() => { setShowCreatePostForm(false) }}
+                        onClick={() => { setShowCreatePostForm(false); setSpotifyLink(''); setCaption('') }}
                     >
                         Cancel
                     </button>
                     <button
                         className='bg-green-600 p-2 w-[85px] text-center rounded-md hover:bg-green-500 transition ease-in-out duration-200 shadow-md'
-                        onClick={() => { setShowCreatePostForm(false); onFormSubmit(localStorage.getItem('email') || '', caption, spotifyLink) }}
+                        onClick={() => { setShowCreatePostForm(false); setSpotifyLink(''); setCaption(''); onFormSubmit(localStorage.getItem('email') || '', caption, spotifyLink) }}
                     >
                         Confirm
                     </button>

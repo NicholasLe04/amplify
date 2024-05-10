@@ -41,7 +41,7 @@ export default function WebSidebar() {
                     {nowPlaying.isSuccess && nowPlaying.data !== null ?
                         <div className='flex flex-col gap-3'>
                             <div className='flex flex-row-reverse'>
-                                <button className='p-2 bg-space-light rounded-md hover:bg-space-lighter transition ease-in-out' onClick={() => {
+                                <button className='p-2 bg-space-light rounded-md hover:bg-space-lighter transition ease-in-out shadow-md' onClick={() => {
                                     setShowCreatePostForm(true)
                                     setSpotifyLink(`https://open.spotify.com/track/${nowPlaying.data.item.id}?`)
                                 }}>
