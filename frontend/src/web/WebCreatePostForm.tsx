@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import { createPost } from '../lib/post'
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { set } from 'lodash';
 
 type Props = {
     spotifyLink: string,
