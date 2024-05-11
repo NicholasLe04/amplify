@@ -34,4 +34,13 @@ async function getUserDetails(id = localStorage.getItem('user_id')) {
     return json
 }
 
-export { getNowPlaying, getUserDetails }
+//get recommended users
+async function getRecommendedUsers(id = localStorage.getItem('user_id')) {
+    const res = await fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/api/v1/users/recommended/${id}`, {
+        method: 'GET'
+    })
+    const json = await res.json()
+    return json
+}
+
+export { getNowPlaying, getUserDetails, getRecommendedUsers }

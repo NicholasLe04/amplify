@@ -29,7 +29,7 @@ async function getRecommendedPosts(id: string): Promise<[Post]> {
     return json
 }
 
-async function getUserPosts(id: string) {
+async function getUserPosts(id?: string) {
     const res = await fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/api/v1/posts/${id}`, {
         method: 'GET'
     })
