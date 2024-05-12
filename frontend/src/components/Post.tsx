@@ -1,7 +1,9 @@
-type User = {
+import { Link } from 'react-router-dom'
+
+type Author = {
+    id: string,
     email: string,
     country: string,
-    externalUrl: string,
     imgUrl: string,
     displayName: string
 }
@@ -12,7 +14,7 @@ type Post = {
     type: string,
     description: string,
     postedAt: string,
-    author: User
+    author: Author
 }
 
 type Props = {
@@ -42,8 +44,8 @@ export default function Post({ post }: Props) {
         <div key={post.id} className="bg-space-light rounded-xl p-6 flex flex-col gap-4 shadow-lg">
             <div className="flex justify-between">
                 <div className='flex gap-3'>
-                    <img className="rounded-full aspect-square" width={32} src={post.author.imgUrl} />
-                    <p className="text-white my-auto">{post.author.displayName} is sharing {post.type === 'artist' || post.type === 'album' || post.type === 'episode' ? 'an' : 'a'} <span className='font-semibold'>{post.type}</span></p>
+                    <Link to={`/profile/${post.author.id}`}><img className="rounded-full aspect-square" width={32} src={post.author.imgUrl} /></Link>
+                    <p className="text-white my-auto"><Link to={`/profile/${post.author.id}`}>{post.author.displayName}</Link> is sharing {post.type === 'artist' || post.type === 'album' || post.type === 'episode' ? 'an' : 'a'} <span className='font-semibold'>{post.type}</span></p>
                 </div>
                 <p className="text-sm text-space-lightest my-auto">{monthName} {day} at {time}</p>
             </div>

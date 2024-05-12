@@ -45,7 +45,7 @@ export default function WebSidebar() {
                                     setShowCreatePostForm(true)
                                     setSpotifyLink(`https://open.spotify.com/track/${nowPlaying.data.item.id}?`)
                                 }}>
-                                    <GrShare style={{ width: 12, height: 12 }} />
+                                    <GrShare style={{ width: 16, height: 16 }} />
                                 </button>
                             </div>
                             <img className='shadow-lg' src={nowPlaying.data.item?.album.images[0].url} />
