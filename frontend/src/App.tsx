@@ -20,9 +20,9 @@ export default function App() {
 
     const [authenticated, setAuthenticated] = useState<boolean | null>(null)
     const [profile, setProfile] = useState({
-        email: '',
+        id: '',
         country: '',
-        externalUrl: '',
+        email: '',
         imgUrl: '',
         displayName: ''
     })
