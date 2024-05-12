@@ -86,6 +86,7 @@ public class PostService {
                         avgFeatures.get(6) + resTrackFeaturesJson.get("speechiness").floatValue(),
                         avgFeatures.get(7) + resTrackFeaturesJson.get("tempo").floatValue(),
                         avgFeatures.get(8) + resTrackFeaturesJson.get("valence").floatValue());
+
                 Post post = postRepository.save(new Post(spotifyUrl, type, description, author));
                 postRepositoryVector.save(post.getId(), avgFeatures);
                 return post;
@@ -286,8 +287,8 @@ public class PostService {
 
     public List<Post> getRecommendedPosts(String id) {
         String email = userRepository.findById(id)
-            .orElseThrow(() -> new IllegalStateException("User with id " + id + " not found"))
-            .getEmail();
+                .orElseThrow(() -> new IllegalStateException("User with id " + id + " not found"))
+                .getEmail();
         List<Float> userVector = userRepositoryVector.findByEmail(email);
         List<Long> postIds = postRepositoryVector.findByVector(userVector);
         List<Post> posts = new ArrayList<>();
