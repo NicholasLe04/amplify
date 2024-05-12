@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { createPost } from '../lib/post'
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useForm, useFormContext } from 'react-hook-form';
+import { useFormContext } from 'react-hook-form';
 
 type Props = {
     setShowCreatePostForm: React.Dispatch<React.SetStateAction<boolean>>
