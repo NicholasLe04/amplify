@@ -6,16 +6,16 @@ import { ProfileContext } from '../lib/context'
 type Props = {
     queryClient: QueryClient,
     profile: {
-        email: string,
+        id: string,
         country: string,
-        externalUrl: string,
+        email: string,
         imgUrl: string,
         displayName: string
     },
     setProfile: React.Dispatch<React.SetStateAction<{
-        email: string,
+        id: string,
         country: string,
-        externalUrl: string,
+        email: string,
         imgUrl: string,
         displayName: string
     }>>,

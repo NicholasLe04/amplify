@@ -61,7 +61,7 @@ export default function Post({ post }: Props) {
             {
                 post.type === 'album' ?
                     < iframe
-                        className='shadow-lg'
+                        className='shadow-md rounded-xl'
                         width="100%"
                         height="420px"
                         title="Spotify Embed"
@@ -71,7 +71,7 @@ export default function Post({ post }: Props) {
             {
                 post.type === 'playlist' ?
                     < iframe
-                        className='shadow-lg'
+                        className='shadow-md roundex-xl'
                         width="100%"
                         height="420px"
                         title="Spotify Embed"
@@ -81,7 +81,7 @@ export default function Post({ post }: Props) {
             {
                 post.type === 'artist' ?
                     < iframe
-                        className='shadow-lg'
+                        className='shadow-md roundex-xl'
                         width="100%"
                         height="420px"
                         title="Spotify Embed"

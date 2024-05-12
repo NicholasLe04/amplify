@@ -1,6 +1,7 @@
 .DS_Store
 .vscode
 .mvn
+.env
 mvnw*
 
 # Logs
