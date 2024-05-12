@@ -1,60 +1,65 @@
-import { useParams } from "react-router-dom"
-import { useEffect, useState } from "react"
-import { getRecommendedUsers, getUserDetails } from "../lib/user";
-import { getUserPosts } from "../lib/post";
-import Post from "../components/Post";
+import { useQuery } from '@tanstack/react-query';
 import { GrShare, GrSpotify } from "react-icons/gr";
+import { useParams } from "react-router-dom";
+import Post from "../components/Post";
 import UserCard from "../components/UserCard";
+import { getUserPosts } from "../lib/post";
+import { getRecommendedUsers, getUserDetails } from "../lib/user";
 import WebProfileLoading from "./WebProfileLoading";
-
-type User = {
-    id: string,
-    displayName: string,
-    imgUrl: string,
-    country: string
-}
 
 export default function WebProfile() {
 
     const { user_id } = useParams();
-    const [userData, setUserData] = useState<User>()
-    const [recommendedUsers, setRecommendedUsers] = useState<Array<User>>()
-    const [userPosts, setUserPosts] = useState<Array<object>>()
 
-    useEffect(() => {
-        async function fetchData(id?: string) {
-            setUserData(await getUserDetails(id))
-            setRecommendedUsers(await getRecommendedUsers(id))
-            setUserPosts(await getUserPosts(id))
+    const profile = useQuery({
+        queryKey: ['profile', user_id],
+        queryFn: async () => {
+            const res = await getUserDetails(user_id)
+            console.log('user details', res)
+            return res
         }
+    })
 
-        fetchData(user_id)
-    }, [user_id])
+    const recommendedUsers = useQuery({
+        queryKey: ['recommendedUsers', user_id],
+        queryFn: async () => {
+            const res = await getRecommendedUsers(user_id)
+            console.log('recommendedUsers', res)
+            return res
+        }
+    })
+
+    const posts = useQuery({
+        queryKey: ['posts', user_id],
+        queryFn: async () => {
+            const res = await getUserPosts(user_id)
+            console.log('posts', res)
+            return res
+        }
+    })
 
     return (
         <>
             <div className='flex flex-col items-center w-full h-full py-16 overflow-y-scroll'>
                 <div className='flex flex-col gap-8 w-1/2 min-w-[500px]'>
-                    {!userData || !recommendedUsers || !userPosts ?
-                        <WebProfileLoading />
-                        :
+                    {profile.isSuccess && recommendedUsers.isSuccess && posts.isSuccess ?
                         <>
                             {/* Header */}
                             <div className='flex flex-col gap-6'>
                                 <div className='flex justify-between'>
                                     <div className="flex flex-wrap gap-8 items-end">
-                                        <img className="w-48 h-48 rounded-full shadow-md" src={userData.imgUrl}></img>
+                                        <img className="w-48 h-48 rounded-full shadow-md" src={profile.data.imgUrl}></img>
                                         <div className='flex gap-4 flex-col'>
                                             <p className="text-space-lightest">Profile</p>
                                             <div className='flex gap-3 items-center'>
-                                                <h1 className="text-6xl font-bold">{userData.displayName}</h1>
+                                                <h1 className="text-6xl font-bold">{profile.data.displayName}</h1>
                                             </div>
-                                            <p className="text-space-lightest">{userData.country}</p>
+                                            <p className="text-space-lightest">{profile.data.country}</p>
                                         </div>
                                     </div>
                                     <div className='flex flex-col-reverse'>
                                         <div className='flex gap-2 h-8'>
-                                            <a href={`https://open.spotify.com/user/${userData.id}`} target="_blank" className='inline-block p-2 bg-space-light rounded-md hover:bg-space-lighter transition ease-in-out shadow-md'>
+                                            <a href={`https://open.spotify.com/user/${profile.data.id}`} target="_blank" className='inline-block p-2 bg-space-light rounded-md hover:bg-space-lighter transition ease-in-out shadow-md'>
                                                 <GrSpotify style={{ width: 16, height: 16 }} />
                                             </a>
                                             <button className='p-2 bg-space-light rounded-md hover:bg-space-lighter transition ease-in-out shadow-md' onClick={() => { navigator.clipboard.writeText(window.location.href) }}>
@@ -73,9 +78,9 @@ export default function WebProfile() {
                                 <h1 className="text-2xl font-bold mb-4">Similar Users</h1>
                                 <div className="flex flex-wrap gap-4 overflow-x-auto">
                                     {
-                                        recommendedUsers.length ?
+                                        recommendedUsers.data.length ?
                                             <>
-                                                {recommendedUsers.map((user: any) => user.id === user_id ?
+                                                {recommendedUsers.data.map((user: any) => user.id === user_id ?
                                                     <>
                                                     </>
                                                     :
@@ -96,9 +101,9 @@ export default function WebProfile() {
                                 <div className='flex flex-col items-center'>
                                     <div className="flex flex-col gap-4 w-full">
                                         {
-                                            userPosts.length ?
+                                            posts.data.length ?
                                                 <>
-                                                    {userPosts.map((post: any) => (
+                                                    {posts.data.map((post: any) => (
                                                         <Post key={post.id} post={post} />
                                                     ))}
                                                 </>
@@ -111,6 +116,8 @@ export default function WebProfile() {
                                 </div>
                             </div>
                         </>
+                        :
+                        <WebProfileLoading />
                     }
                 </div>
             </div>
