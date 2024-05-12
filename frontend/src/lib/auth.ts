@@ -44,6 +44,8 @@ async function logout() {
     localStorage.removeItem('refresh_token')
     localStorage.removeItem('expires_at')
     localStorage.removeItem('user_id')
+
+    window.location.href = import.meta.env.VITE_APP_FRONTEND_URL;
 }
 
 export { login, loginCallback, refreshToken, logout }

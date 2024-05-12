@@ -1,7 +1,7 @@
 import { getRecommendedPosts } from "../lib/post"
 import Post from "../components/Post"
 import { useQuery } from '@tanstack/react-query'
-import WebLoading from './WebLoading'
+import WebPostsLoading from "./WebPostsLoading"
 
 export default function WebHome() {
 
@@ -18,7 +18,7 @@ export default function WebHome() {
                 <div className='flex flex-col gap-4 min-w-[500px] w-1/2'>
                     {posts.isLoading ?
                         <>
-                            <WebLoading />
+                            <WebPostsLoading />
                         </> : null}
                     {posts.isError ? <div>Error fetching :(</div> : null}
                     {posts.isSuccess ?

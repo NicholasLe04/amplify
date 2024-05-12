@@ -1,4 +1,4 @@
-export default function WebLoading() {
+export default function WebPostsLoading() {
     return (
         <>
             <div className='bg-space-light rounded-xl p-6 flex flex-col gap-4'>

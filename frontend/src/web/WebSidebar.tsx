@@ -66,7 +66,7 @@ export default function WebSidebar() {
                             </div>
                         </div>
                     }
-                    <Link className='flex p-5 gap-5 bg-space-light rounded-xl hover:bg-space-lighter-hover transition ease-in-out shadow-lg' to='/profile'>
+                    <Link className='flex p-5 gap-5 bg-space-light rounded-xl hover:bg-space-lighter-hover transition ease-in-out shadow-lg' to={`/profile/${localStorage.getItem('user_id')}`}>
                         <GrUser className='my-auto' />
                         <div className='flex-1 text-lg'>Profile</div>
                     </Link>
