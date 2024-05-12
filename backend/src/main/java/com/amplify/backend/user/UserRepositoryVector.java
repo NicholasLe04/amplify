@@ -89,7 +89,7 @@ public class UserRepositoryVector {
         SearchResp res = milvusClient.search(SearchReq.builder()
                 .collectionName("users")
                 .data(Collections.singletonList(vector))
-                .topK(10)
+                .topK(5)
                 .build());
         ArrayList<String> userEmails = new ArrayList<>();
         for (SearchResp.SearchResult user : res.getSearchResults().get(0)) {

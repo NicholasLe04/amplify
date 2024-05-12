@@ -85,7 +85,7 @@ export default function App() {
                                 <div className='flex-1'>
                                     <Routes>
                                         <Route path='/' element={<MobileHome />} />
-                                        <Route path='/profile' element={<MobileProfile />} />
+                                        <Route path='/profile/:user_id' element={<MobileProfile />} />
                                         <Route path='/callback' element={<Callback setAuthenticated={setAuthenticated} />} />
                                     </Routes>
                                 </div>
@@ -100,7 +100,7 @@ export default function App() {
                                     <WebHeader authenticated={authenticated} setAuthenticated={setAuthenticated} />
                                     <Routes>
                                         <Route path='/' element={<WebHome />} />
-                                        <Route path='/profile' element={<WebProfile />} />
+                                        <Route path='/profile/:user_id' element={<WebProfile />} />
                                         <Route path='/callback' element={<Callback setAuthenticated={setAuthenticated} />} />
                                     </Routes>
                                 </div>

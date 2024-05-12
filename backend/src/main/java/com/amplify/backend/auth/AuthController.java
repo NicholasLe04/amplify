@@ -81,7 +81,7 @@ public class AuthController {
             country = profileRoot.get("country").asText();
             displayName = profileRoot.get("display_name").asText();
             email = profileRoot.get("email").asText();
-            imgUrl = profileRoot.get("images").get(0).get("url").asText();
+            imgUrl = profileRoot.get("images").get(1).get("url").asText();
         } catch (Exception e) {
             e.printStackTrace();
         }
