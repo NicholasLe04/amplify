@@ -24,15 +24,15 @@ export default function WebSidebar() {
             {showCreatePostForm ? <WebCreatePostPopup spotifyLink={spotifyLink} setSpotifyLink={setSpotifyLink} caption={caption} setCaption={setCaption} setShowCreatePostForm={setShowCreatePostForm} /> : null}
             <div className='w-60 h-full px-5 py-10 flex flex-col justify-between border-r-2 border-space-lighter select-none'>
                 <div className='flex flex-col gap-3'>
-                    <Link className='flex p-5 gap-5 bg-space-light rounded-xl hover:bg-space-lighter transition ease-in-out shadow-lg' to='/'>
+                    <Link className='flex p-5 gap-5 bg-space-light rounded-xl hover:bg-space-lighter transition ease-in-out shadow-lg duration-200' to='/'>
                         <GrHomeRounded className='my-auto' />
                         <div className='flex-1 text-lg'>Home</div>
                     </Link>
-                    <button className='flex p-5 gap-5 bg-space-light rounded-xl hover:bg-space-lighter transition ease-in-out shadow-lg' onClick={() => { console.log('unimplemented') }}>
+                    <button className='flex p-5 gap-5 bg-space-light rounded-xl hover:bg-space-lighter transition ease-in-out shadow-lg duration-200' onClick={() => { console.log('unimplemented') }}>
                         <GrSearch className='my-auto' />
                         <div className='flex-1 text-lg text-left'>Search</div>
                     </button>
-                    <button className='flex p-5 gap-5 bg-space-light rounded-xl hover:bg-space-lighter transition ease-in-out shadow-lg' onClick={() => { setShowCreatePostForm(true) }}>
+                    <button className='flex p-5 gap-5 bg-space-light rounded-xl hover:bg-space-lighter transition ease-in-out shadow-lg duration-200' onClick={() => { setShowCreatePostForm(true) }}>
                         <GrAdd className='my-auto' />
                         <div className='flex-1 text-lg text-left'>Create Post</div>
                     </button>
@@ -41,7 +41,7 @@ export default function WebSidebar() {
                     {nowPlaying.isSuccess && nowPlaying.data !== null ?
                         <div className='flex flex-col gap-3'>
                             <div className='flex flex-row-reverse'>
-                                <button className='p-2 bg-space-light rounded-md hover:bg-space-lighter transition ease-in-out shadow-md' onClick={() => {
+                                <button className='p-2 bg-space-light rounded-md hover:bg-space-lighter transition ease-in-out shadow-md duration-200' onClick={() => {
                                     setShowCreatePostForm(true)
                                     setSpotifyLink(`https://open.spotify.com/track/${nowPlaying.data.item.id}?`)
                                 }}>
@@ -66,7 +66,7 @@ export default function WebSidebar() {
                             </div>
                         </div>
                     }
-                    <Link className='flex p-5 gap-5 bg-space-light rounded-xl hover:bg-space-lighter-hover transition ease-in-out shadow-lg' to={`/profile/${localStorage.getItem('user_id')}`}>
+                    <Link className='flex p-5 gap-5 bg-space-light rounded-xl hover:bg-space-lighter-hover transition ease-in-out shadow-lg duration-200' to={`/profile/${localStorage.getItem('user_id')}`}>
                         <GrUser className='my-auto' />
                         <div className='flex-1 text-lg'>Profile</div>
                     </Link>

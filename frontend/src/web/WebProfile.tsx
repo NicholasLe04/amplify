@@ -6,10 +6,19 @@ import UserCard from "../components/UserCard";
 import { getUserPosts } from "../lib/post";
 import { getRecommendedUsers, getUserDetails } from "../lib/user";
 import WebProfileLoading from "./WebProfileLoading";
+import { useState } from 'react';
 
 export default function WebProfile() {
 
     const { user_id } = useParams();
+    const [copyOpacity, setCopyOpacity] = useState(0)
+
+    function displayCopied() {
+        setCopyOpacity(100)
+        setTimeout(() => {
+            setCopyOpacity(0)
+        }, 2000)
+    }
 
     const profile = useQuery({
         queryKey: ['profile', user_id],
@@ -44,7 +53,6 @@ export default function WebProfile() {
                 <div className='flex flex-col gap-8 w-1/2 min-w-[500px]'>
                     {profile.isSuccess && recommendedUsers.isSuccess && posts.isSuccess ?
                         <>
-                            {/* Header */}
                             <div className='flex flex-col gap-6'>
                                 <div className='flex justify-between'>
                                     <div className="flex flex-wrap gap-8 items-end">
@@ -57,23 +65,22 @@ export default function WebProfile() {
                                             <p className="text-space-lightest">{profile.data.country}</p>
                                         </div>
                                     </div>
-                                    <div className='flex flex-col-reverse'>
+                                    <div className='flex flex-col-reverse gap-2'>
                                         <div className='flex gap-2 h-8'>
                                             <a href={`https://open.spotify.com/user/${profile.data.id}`} target="_blank" className='inline-block p-2 bg-space-light rounded-md hover:bg-space-lighter transition ease-in-out shadow-md'>
                                                 <GrSpotify style={{ width: 16, height: 16 }} />
                                             </a>
-                                            <button className='p-2 bg-space-light rounded-md hover:bg-space-lighter transition ease-in-out shadow-md' onClick={() => { navigator.clipboard.writeText(window.location.href) }}>
+                                            <button className='p-2 bg-space-light rounded-md hover:bg-space-lighter transition ease-in-out duration-200 shadow-md' onClick={() => { navigator.clipboard.writeText(window.location.href); displayCopied() }}>
                                                 <GrShare style={{ width: 16, height: 16 }} />
                                             </button>
                                         </div>
+                                        <div className={`text-right opacity-${copyOpacity} transition-opacity ease-in-out duration-200`}>Copied!</div>
                                     </div>
                                 </div>
                             </div>
-                            {/* Divider */}
                             <div className='flex flex-col gap-3'>
                                 <hr className='border-space-lightest' />
                             </div>
-                            {/* Similar Users */}
                             <div className='w-full'>
                                 <h1 className="text-2xl font-bold mb-4">Similar Users</h1>
                                 <div className="flex flex-wrap gap-4 overflow-x-auto">
@@ -94,7 +101,6 @@ export default function WebProfile() {
                                     }
                                 </div>
                             </div>
-                            {/* User Posts */}
                             <hr className='border-space-lightest' />
                             <div className="">
                                 <h1 className="text-2xl font-bold mb-4">User Posts</h1>
@@ -120,7 +126,7 @@ export default function WebProfile() {
                         <WebProfileLoading />
                     }
                 </div>
-            </div>
+            </div >
         </>
     )
 }
