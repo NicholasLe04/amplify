@@ -37,6 +37,12 @@ export default function WebCreatePostPopup({ setShowCreatePostForm }: Props) {
         }
     })
 
+    function exitForm() {
+        setShowCreatePostForm(false)
+        setValue('link', '')
+        setValue('caption', '')
+    }
+
     // esc to exit
     useEffect(() => {
         addEventListener('keydown', (e) => {
@@ -49,7 +55,7 @@ export default function WebCreatePostPopup({ setShowCreatePostForm }: Props) {
 
     return (
         <div className='fixed w-screen h-screen bottom-0 right-0 z-10 flex justify-center items-center select-none'>
-            <div className='w-full h-full absolute bg-black opacity-50' onClick={() => { setShowCreatePostForm(false) }}></div>
+            <div className='w-full h-full absolute bg-black opacity-50' onClick={() => { exitForm() }}></div>
             <form className='max-w-[700px] max-h-[550px] w-1/2 h-1/2 z-20 px-10 py-10 bg-space rounded-2xl shadow-2xl flex flex-col relative overflow-hidden'
                 onSubmit={handleSubmit((data, e: any) => {
                     e.preventDefault()
@@ -59,7 +65,7 @@ export default function WebCreatePostPopup({ setShowCreatePostForm }: Props) {
                         description: data.caption,
                         spotifyUrl: data.link
                     })
-                    setShowCreatePostForm(false)
+                    exitForm()
                 })}
             >
                 <div className='flex flex-col gap-4'>
@@ -97,7 +103,7 @@ export default function WebCreatePostPopup({ setShowCreatePostForm }: Props) {
                 <div className='absolute bottom-8 right-10 flex gap-2'>
                     <button className='bg-space-light p-2 w-[85px] text-center rounded-md hover:bg-space-lighter transition ease-in-out duration-200 shadow-lg'
                         type='button'
-                        onClick={() => { setShowCreatePostForm(false) }}
+                        onClick={() => { exitForm() }}
                     >
                         Cancel
                     </button>
