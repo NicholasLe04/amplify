@@ -74,7 +74,7 @@ export default function WebProfile() {
                                                 <GrShare style={{ width: 16, height: 16 }} />
                                             </button>
                                         </div>
-                                        <div className={`text-right opacity-${copyOpacity} transition-opacity ease-in-out duration-200`}>Copied!</div>
+                                        <div style={{ opacity: copyOpacity }} className={`text-right transition-opacity ease-in-out duration-200`}>Copied!</div>
                                     </div>
                                 </div>
                             </div>
