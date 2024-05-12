@@ -41,7 +41,7 @@ export default function Post({ post }: Props) {
     const time = `${hours % 12 || 12}:${minutes < 10 ? '0' : ''}${minutes} ${hours < 12 ? 'AM' : 'PM'}`;
 
     return (
-        <div key={post.id} className="bg-space-light rounded-xl p-6 flex flex-col gap-4 shadow-lg">
+        <div key={post.id} className="bg-space-light rounded-xl p-6 flex flex-col gap-4 shadow-xl">
             <div className="flex justify-between">
                 <div className='flex gap-3'>
                     <Link to={`/profile/${post.author.id}`}><img className="rounded-full aspect-square" width={32} src={post.author.imgUrl} /></Link>
@@ -53,7 +53,7 @@ export default function Post({ post }: Props) {
             {
                 post.type === 'track' ?
                     < iframe
-                        className='shadow-lg rounded-xl'
+                        className='shadow-xl rounded-xl'
                         width="100%"
                         height="80px"
                         title="Spotify Embed"
@@ -63,7 +63,7 @@ export default function Post({ post }: Props) {
             {
                 post.type === 'album' ?
                     < iframe
-                        className='shadow-md rounded-xl'
+                        className='shadow-lg rounded-xl'
                         width="100%"
                         height="420px"
                         title="Spotify Embed"
@@ -73,7 +73,7 @@ export default function Post({ post }: Props) {
             {
                 post.type === 'playlist' ?
                     < iframe
-                        className='shadow-md roundex-xl'
+                        className='shadow-lg roundex-xl'
                         width="100%"
                         height="420px"
                         title="Spotify Embed"
@@ -83,7 +83,7 @@ export default function Post({ post }: Props) {
             {
                 post.type === 'artist' ?
                     < iframe
-                        className='shadow-md roundex-xl'
+                        className='shadow-lg roundex-xl'
                         width="100%"
                         height="420px"
                         title="Spotify Embed"

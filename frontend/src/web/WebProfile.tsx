@@ -56,7 +56,7 @@ export default function WebProfile() {
                             <div className='flex flex-col gap-6'>
                                 <div className='flex justify-between'>
                                     <div className="flex flex-wrap gap-8 items-end">
-                                        <img className="w-48 h-48 rounded-full shadow-md" src={profile.data.imgUrl}></img>
+                                        <img className="w-48 h-48 rounded-full shadow-lg" src={profile.data.imgUrl}></img>
                                         <div className='flex gap-4 flex-col'>
                                             <p className="text-space-lightest">Profile</p>
                                             <div className='flex gap-3 items-center'>
@@ -67,10 +67,10 @@ export default function WebProfile() {
                                     </div>
                                     <div className='flex flex-col-reverse gap-2'>
                                         <div className='flex gap-2 h-8'>
-                                            <a href={`https://open.spotify.com/user/${profile.data.id}`} target="_blank" className='inline-block p-2 bg-space-light rounded-md hover:bg-space-lighter transition ease-in-out shadow-md'>
+                                            <a href={`https://open.spotify.com/user/${profile.data.id}`} target="_blank" className='inline-block p-2 bg-space-light rounded-md hover:bg-space-lighter transition ease-in-out shadow-lg'>
                                                 <GrSpotify style={{ width: 16, height: 16 }} />
                                             </a>
-                                            <button className='p-2 bg-space-light rounded-md hover:bg-space-lighter transition ease-in-out duration-200 shadow-md' onClick={() => { navigator.clipboard.writeText(window.location.href); displayCopied() }}>
+                                            <button className='p-2 bg-space-light rounded-md hover:bg-space-lighter transition ease-in-out duration-200 shadow-lg' onClick={() => { navigator.clipboard.writeText(window.location.href); displayCopied() }}>
                                                 <GrShare style={{ width: 16, height: 16 }} />
                                             </button>
                                         </div>
@@ -83,7 +83,7 @@ export default function WebProfile() {
                             </div>
                             <div className='w-full'>
                                 <h1 className="text-2xl font-bold mb-4">Similar Users</h1>
-                                <div className="flex flex-wrap gap-4 overflow-x-auto">
+                                <div className="flex flex-wrap gap-4">
                                     {
                                         recommendedUsers.data.length ?
                                             <>

@@ -13,8 +13,8 @@ type Props = {
 
 export default function UserCard({ user }: Props) {
     return (
-        <Link className="flex flex-col gap-2 w-[244px] p-6 rounded-xl duration-200 shadow-lg transition ease-in-out bg-space-light hover:bg-space-lighter" to={`/profile/${user.id}`}>
-            <img className="w-full aspect-square rounded-full shadow-md" src={user.imgUrl}></img>
+        <Link className="flex flex-col gap-2 w-[244px] p-6 rounded-xl duration-200 shadow-xl transition ease-in-out bg-space-light hover:bg-space-lighter" to={`/profile/${user.id}`}>
+            <img className="w-full aspect-square rounded-full shadow-lg" src={user.imgUrl}></img>
             <p className="text-lg">{user.displayName}</p>
             <p className="text-space-lightest">Profile</p>
         </Link>

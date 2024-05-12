@@ -3,7 +3,6 @@ import WebPostsLoading from "./WebPostsLoading";
 export default function WebProfileLoading() {
     return (
         <>
-            {/* Header */}
             <div className="flex flex-wrap gap-8 items-end">
                 <div className="w-48 h-48 rounded-full bg-space-light" />
                 <div>
@@ -18,18 +17,18 @@ export default function WebProfileLoading() {
             <div className="">
                 <h1 className="text-2xl font-bold mb-4">Similar Users</h1>
                 <div className="flex flex-wrap gap-4">
-                    <div className="flex flex-col gap-2 w-[244px] p-6 rounded-xl shadow-lg transition ease-in-out bg-space-light hover:bg-space-lighter duration-200">
-                        <div className="w-full aspect-square rounded-full shadow-md bg-space-lighter"></div>
+                    <div className="flex flex-col gap-2 w-[244px] p-6 rounded-xl shadow-xl transition ease-in-out bg-space-light hover:bg-space-lighter duration-200">
+                        <div className="w-full aspect-square rounded-full shadow-lg bg-space-lighter"></div>
                         <p className="rounded-md h-7 bg-space-lighter w-32"></p>
                         <p className="rounded-md text-space-lightest">Profile</p>
                     </div>
-                    <div className="flex flex-col gap-2 w-[244px] p-6 rounded-xl shadow-lg transition ease-in-out bg-space-light hover:bg-space-lighter duration-200">
-                        <div className="w-full aspect-square rounded-full shadow-md bg-space-lighter"></div>
+                    <div className="flex flex-col gap-2 w-[244px] p-6 rounded-xl shadow-xl transition ease-in-out bg-space-light hover:bg-space-lighter duration-200">
+                        <div className="w-full aspect-square rounded-full shadow-lg bg-space-lighter"></div>
                         <p className="rounded-md h-7 bg-space-lighter w-32"></p>
                         <p className="rounded-md text-space-lightest">Profile</p>
                     </div>
-                    <div className="flex flex-col gap-2 w-[244px] p-6 rounded-xl shadow-lg transition ease-in-out bg-space-light hover:bg-space-lighter duration-200">
-                        <div className="w-full aspect-square rounded-full shadow-md bg-space-lighter"></div>
+                    <div className="flex flex-col gap-2 w-[244px] p-6 rounded-xl shadow-xl transition ease-in-out bg-space-light hover:bg-space-lighter duration-200">
+                        <div className="w-full aspect-square rounded-full shadow-lg bg-space-lighter"></div>
                         <p className="rounded-md h-7 bg-space-lighter w-32"></p>
                         <p className="rounded-md text-space-lightest">Profile</p>
                     </div>

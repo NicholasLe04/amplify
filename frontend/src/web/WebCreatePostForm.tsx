@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { createPost } from '../lib/post'
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useForm } from 'react-hook-form';
+import { useForm, useFormContext } from 'react-hook-form';
 
 type Props = {
     setShowCreatePostForm: React.Dispatch<React.SetStateAction<boolean>>
@@ -17,7 +17,7 @@ type RequestData = {
 export default function WebCreatePostPopup({ setShowCreatePostForm }: Props) {
 
     const queryClient = useQueryClient()
-    const { register, handleSubmit, setValue, formState: { errors } } = useForm()
+    const { register, handleSubmit, setValue, formState: { errors } } = useFormContext()
 
     function getPostType(spotifyUrl: string): string {
         return spotifyUrl.split('/')[3];
@@ -73,7 +73,7 @@ export default function WebCreatePostPopup({ setShowCreatePostForm }: Props) {
                                 {errors.link && <span className='text-red-500'>{errors.link.message?.toString()}</span>}
                             </div>
                         </div>
-                        <input className='w-full p-2 rounded-lg bg-space-light shadow-md' type='text' placeholder='https://open.spotify.com/track/...'
+                        <input className='w-full p-2 rounded-lg bg-space-light shadow-lg' type='text' placeholder='https://open.spotify.com/track/...'
                             onChange={(e) => { setValue('link', e.target.value) }}
                             ref={register('link', {
                                 required: {
@@ -89,20 +89,20 @@ export default function WebCreatePostPopup({ setShowCreatePostForm }: Props) {
                     </div>
                     <div className='flex flex-col gap-2'>
                         Caption
-                        <textarea className='w-full p-2 rounded-lg bg-space-light min-h-52 max-h-52 shadow-md' placeholder='this is my favorite song..'
+                        <textarea className='w-full p-2 rounded-lg bg-space-light min-h-52 max-h-52 shadow-lg' placeholder='this is my favorite song..'
                             {...register('caption')}
                         />
                     </div>
                 </div>
                 <div className='absolute bottom-8 right-10 flex gap-2'>
-                    <button className='bg-space-light p-2 w-[85px] text-center rounded-md hover:bg-space-lighter transition ease-in-out duration-200 shadow-md'
+                    <button className='bg-space-light p-2 w-[85px] text-center rounded-md hover:bg-space-lighter transition ease-in-out duration-200 shadow-lg'
                         type='button'
                         onClick={() => { setShowCreatePostForm(false) }}
                     >
                         Cancel
                     </button>
                     <button
-                        className='bg-green-600 p-2 w-[85px] text-center rounded-md hover:bg-green-500 transition ease-in-out duration-200 shadow-md'
+                        className='bg-green-600 p-2 w-[85px] text-center rounded-md hover:bg-green-500 transition ease-in-out duration-200 shadow-lg'
                         type='submit'
                     >
                         Confirm
@@ -112,4 +112,3 @@ export default function WebCreatePostPopup({ setShowCreatePostForm }: Props) {
         </div >
     )
 }
-
