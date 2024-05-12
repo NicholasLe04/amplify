@@ -45,11 +45,11 @@ export default function WebProfile() {
                                     <div className="flex flex-wrap gap-8 items-end">
                                         <img className="w-48 h-48 rounded-full shadow-md" src={userData.imgUrl}></img>
                                         <div className='flex gap-4 flex-col'>
-                                            <p className="text-gray-400">Profile</p>
+                                            <p className="text-space-lightest">Profile</p>
                                             <div className='flex gap-3 items-center'>
                                                 <h1 className="text-6xl font-bold">{userData.displayName}</h1>
                                             </div>
-                                            <p className="text-gray-400">{userData.country}</p>
+                                            <p className="text-space-lightest">{userData.country}</p>
                                         </div>
                                     </div>
                                     <div className='flex flex-col-reverse'>

@@ -16,7 +16,7 @@ export default function UserCard({ user }: Props) {
         <Link className="flex flex-col gap-2 w-[244px] p-6 rounded-xl shadow-lg transition ease-in-out bg-space-light hover:bg-space-lighter" to={`/profile/${user.id}`}>
             <img className="w-full aspect-square rounded-full shadow-md" src={user.imgUrl}></img>
             <p className="text-lg">{user.displayName}</p>
-            <p className="text text-gray-400">Profile</p>
+            <p className="text-space-lightest">Profile</p>
         </Link>
     )
 }
