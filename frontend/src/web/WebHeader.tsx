@@ -33,7 +33,7 @@ export default function WebHeader({ authenticated, setAuthenticated }: Props) {
                             <div className='flex gap-2 h-[30px]' onClick={() => { setLogoutMenu(!logoutMenu); setTimeout(() => { setLogoutMenu(false) }, 3000) }}>
                                 {profileContext?.profile.imgUrl ?
                                     <>
-                                        <img className='aspect-square rounded-full' width={30} src={profileContext.profile.imgUrl} alt='profile' />
+                                        <img className='object-cover aspect-square rounded-full' width={30} src={profileContext.profile.imgUrl} alt='profile' />
                                         <div className='text-lg'>{profileContext!.profile.displayName}</div>
                                     </>
                                     :
