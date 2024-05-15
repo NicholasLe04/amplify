@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 import com.amplify.backend.user.User;
 
 @Repository
-public interface PostRepository extends JpaRepository<Post, Long>{
+public interface PostRepository extends JpaRepository<Post, Long> {
 
     @Query("SELECT p FROM Post p WHERE p.author = ?1")
     Optional<List<Post>> findByAuthor(User author);
