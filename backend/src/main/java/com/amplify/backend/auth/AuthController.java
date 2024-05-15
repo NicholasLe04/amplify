@@ -81,7 +81,12 @@ public class AuthController {
             country = profileRoot.get("country").asText();
             displayName = profileRoot.get("display_name").asText();
             email = profileRoot.get("email").asText();
-            imgUrl = profileRoot.get("images").get(1).get("url").asText();
+            // Get user image
+            if (profileRoot.get("images").size() > 0)
+                imgUrl = profileRoot.get("images").get(1).get("url").asText();
+            // Default image
+            else
+                imgUrl = "https://cdn-icons-png.flaticon.com/512/9131/9131529.png";
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -44,7 +44,7 @@ export default function Post({ post }: Props) {
         <div key={post.id} className="bg-space-light rounded-xl p-6 flex flex-col gap-4 shadow-xl">
             <div className="flex justify-between">
                 <div className='flex gap-3'>
-                    <Link to={`/profile/${post.author.id}`}><img className="rounded-full aspect-square" width={32} src={post.author.imgUrl} /></Link>
+                    <Link to={`/profile/${post.author.id}`}><img className="object-cover rounded-full aspect-square" width={32} src={post.author.imgUrl} /></Link>
                     <p className="text-white my-auto"><Link to={`/profile/${post.author.id}`}>{post.author.displayName}</Link> is sharing {post.type === 'artist' || post.type === 'album' || post.type === 'episode' ? 'an' : 'a'} <span className='font-semibold'>{post.type}</span></p>
                 </div>
                 <p className="text-sm text-space-lightest my-auto">{monthName} {day} at {time}</p>

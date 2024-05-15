@@ -56,7 +56,7 @@ export default function WebProfile() {
                             <div className='flex flex-col gap-6'>
                                 <div className='flex justify-between'>
                                     <div className="flex flex-wrap gap-8 items-end">
-                                        <img className="w-48 h-48 rounded-full shadow-lg" src={profile.data.imgUrl}></img>
+                                        <img className="object-cover w-48 h-48 rounded-full shadow-lg" src={profile.data.imgUrl}></img>
                                         <div className='flex gap-4 flex-col'>
                                             <p className="text-space-lightest">Profile</p>
                                             <div className='flex gap-3 items-center'>
