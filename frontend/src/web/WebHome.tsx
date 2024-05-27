@@ -1,5 +1,5 @@
 import { getRecommendedPosts } from "../lib/post"
-import Post from "../components/Post"
+import Post from "./WebPost"
 import { useQuery } from '@tanstack/react-query'
 import WebPostsLoading from "./WebPostsLoading"
 

@@ -1,8 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
 import { GrShare, GrSpotify } from "react-icons/gr";
 import { useParams } from "react-router-dom";
-import Post from "../components/Post";
-import UserCard from "../components/UserCard";
+import Post from "./WebPost";
+import UserCard from "./WebUserCard";
 import { getUserPosts } from "../lib/post";
 import { getRecommendedUsers, getUserDetails } from "../lib/user";
 import WebProfileLoading from "./WebProfileLoading";
