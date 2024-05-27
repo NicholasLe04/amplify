@@ -54,7 +54,7 @@ export default function MobileCreatePostPopup({ setShowCreatePostForm }: Props) 
     }, [])
 
     return (
-        <div className='fixed w-screen h-screen bottom-0 right-0 z-10 flex justify-center items-center select-none py-14'>
+        <div className='fixed w-screen h-screen bottom-0 right-0 z-10 flex justify-center items-center select-none pt-28'>
             <form className='w-full h-full z-20 px-10 py-10 bg-space flex flex-col relative overflow-hidden'
                 onSubmit={handleSubmit((data, e: any) => {
                     e.preventDefault()
