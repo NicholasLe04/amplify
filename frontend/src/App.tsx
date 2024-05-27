@@ -118,7 +118,7 @@ export default function App() {
                                 <Routes>
                                     <Route path='/' element={
                                         <>
-                                            <MobileHeader />
+                                            <MobileHeader authenticated={authenticated} setAuthenticated={setAuthenticated} />
                                             <div>home page here</div>
                                         </>
                                     } />
