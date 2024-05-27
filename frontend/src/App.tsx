@@ -81,8 +81,8 @@ export default function App() {
                         windowWidth < 800 ?
                             // mobile
                             <div className='w-full h-full flex flex-col'>
-                                <MobileHeader />
-                                <div className='flex-1'>
+                                <MobileHeader authenticated={authenticated} setAuthenticated={setAuthenticated} />
+                                <div className='h-[calc(100%-112px)]'>
                                     <Routes>
                                         <Route path='/' element={<MobileHome />} />
                                         <Route path='/profile/:user_id' element={<MobileProfile />} />

@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { GrAdd, GrHomeRounded, GrSearch, GrUser } from 'react-icons/gr';
 import { Link } from 'react-router-dom';
 import { getNowPlaying } from '../lib/user';
-import WebCreatePostPopup from './WebCreatePostForm';
+import WebCreatePostForm from './WebCreatePostForm';
 import { GrShare } from "react-icons/gr";
 import { FormProvider, useForm } from 'react-hook-form';
 
@@ -21,7 +21,7 @@ export default function WebSidebar() {
     return (
         <>
             <FormProvider {...methods}>
-                {showCreatePostForm ? <WebCreatePostPopup setShowCreatePostForm={setShowCreatePostForm} /> : null}
+                {showCreatePostForm ? <WebCreatePostForm setShowCreatePostForm={setShowCreatePostForm} /> : null}
             </FormProvider>
             <div className='w-60 h-full px-5 py-10 flex flex-col justify-between border-r-2 border-space-lighter select-none'>
                 <div className='flex flex-col gap-3'>
